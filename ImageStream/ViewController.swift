@@ -13,8 +13,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        let apiRequest = SearchPhotosRequestBuilder(searchString: "surf")
+        let imageDownloader = ImageDataDownloader()
+        imageDownloader.getImages(for: apiRequest.url)
     }
-
-
 }
 
