@@ -1,0 +1,6 @@
+framework module Pods_ImageStreamUITests {
+  umbrella header "Pods-ImageStreamUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
