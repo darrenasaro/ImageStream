@@ -8,9 +8,12 @@
 
 import Foundation
 
+fileprivate let flickrAPIKey = "8fc4e611f9c6ebc9d1f8c48ff92ece14"
+
 //TODO: Add more methods
 enum FlickrAPIMethod: String {
     case photosSearch = "flickr.photos.search"
+    case getInfo = "flickr.photos.getInfo"
 }
 
 class FlickrAPIRequestBuilder {
@@ -28,7 +31,7 @@ class FlickrAPIRequestBuilder {
         return url
     }
     
-    init(apiKey: String, method: FlickrAPIMethod, queryArguments: [String : String]) {
+    init(apiKey: String = flickrAPIKey, method: FlickrAPIMethod, queryArguments: [String : String]) {
         self.apiKey = apiKey
         self.method = method
         self.queryArguments = queryArguments
@@ -37,17 +40,26 @@ class FlickrAPIRequestBuilder {
 
 class FlickrPhotoSearchRequestBuilder: FlickrAPIRequestBuilder {
     init(searchString: String) {
-        
-        let apiKey = "8fc4e611f9c6ebc9d1f8c48ff92ece14"
-        let postSearchMethod = FlickrAPIMethod.photosSearch
-        let postSearchQueryArgs = ["text" : searchString,
+        let photoSearchMethod = FlickrAPIMethod.photosSearch
+        let photoSearchQueryArgs = ["text" : searchString,
                                    "sort" : "relevance",
                                    "format" : "json",
                                    "nojsoncallback" : "1"]
         
-        super.init(apiKey: apiKey,
-                   method: postSearchMethod,
-                   queryArguments: postSearchQueryArgs)
+        super.init(method: photoSearchMethod,
+                   queryArguments: photoSearchQueryArgs)
+    }
+}
+
+class FlickrPhotoInfoRequestBuilder: FlickrAPIRequestBuilder {
+    init(photoID: String) {
+        let photoInfoMethod = FlickrAPIMethod.getInfo
+        let photoInfoQueryArgs = ["photo_id" : photoID,
+                                  "format" : "json",
+                                  "nojsoncallback" : "1"]
+        
+        super.init(method: photoInfoMethod,
+                   queryArguments: photoInfoQueryArgs)
     }
 }
 

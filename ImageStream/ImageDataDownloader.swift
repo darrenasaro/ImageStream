@@ -8,7 +8,7 @@
 
 import Foundation
 
-//downloads and converts data to JSON
+//downloads and maps JSON to object
 class NetworkService<T: Decodable> {
     private let downloader: NetworkDownloader
     
@@ -16,13 +16,14 @@ class NetworkService<T: Decodable> {
         self.downloader = downloader
     }
     
-    func get(from url: String) {
+    func get(from url: String, completion: @escaping (T)->()) {
         downloader.get(from: url) { (result) in
             switch result {
             case .success(let result):
+                print(result)
                 do {
                     let searchResult = try JSONDecoder().decode(T.self, from: result)
-                    print(searchResult)
+                    completion(searchResult)
                 } catch let error {
                     print(error)
                 }
@@ -34,3 +35,5 @@ class NetworkService<T: Decodable> {
 }
 
 class FlickrPhotoSearchService: NetworkService<FlickrPhotoSearchResult> { }
+
+class FlickrPhotoInfoService: NetworkService<FlickrPhotoInfo> { }
