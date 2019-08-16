@@ -17,13 +17,13 @@ enum NetworkResult<T, U: Error> {
 //TODO: logically bind network layer to JSON
 //gets JSON given a url
 protocol NetworkDownloader {
-    func get(from: String, completion: @escaping (NetworkResult<String, Error>)->())
+    func get(from: String, completion: @escaping (NetworkResult<Data, Error>)->())
 }
 
 class AFDownloader: NetworkDownloader {
     
-    func get(from url: String, completion: @escaping (NetworkResult<String, Error>)->()) {
-        AF.request(url).responseString { (response) in
+    func get(from url: String, completion: @escaping (NetworkResult<Data, Error>)->()) {
+        AF.request(url).responseData { (response) in
             if let value = response.value {
                 completion(NetworkResult.success(result: value))
             } else if let error = response.error {
