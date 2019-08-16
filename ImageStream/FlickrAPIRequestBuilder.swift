@@ -35,7 +35,7 @@ class FlickrAPIRequestBuilder {
     }
 }
 
-class SearchPhotosRequestBuilder: FlickrAPIRequestBuilder {
+class FlickrPhotoSearchRequestBuilder: FlickrAPIRequestBuilder {
     init(searchString: String) {
         
         let apiKey = "8fc4e611f9c6ebc9d1f8c48ff92ece14"

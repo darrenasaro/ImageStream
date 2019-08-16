@@ -8,23 +8,20 @@
 
 import Foundation
 
-//map to models from JSON
-class ImageDataDownloader {
-    
+//downloads and converts data to JSON
+class NetworkService<T: Decodable> {
     private let downloader: NetworkDownloader
     
     init(downloader: NetworkDownloader = AFDownloader()) {
         self.downloader = downloader
     }
     
-    //TODO: add callback with model
-    func getImages<T: Decodable>(for url: String, type: T.Type) {
+    func get(from url: String) {
         downloader.get(from: url) { (result) in
             switch result {
             case .success(let result):
-                print(result)
                 do {
-                    let searchResult = try JSONDecoder().decode(type, from: result)
+                    let searchResult = try JSONDecoder().decode(T.self, from: result)
                     print(searchResult)
                 } catch let error {
                     print(error)
@@ -35,3 +32,5 @@ class ImageDataDownloader {
         }
     }
 }
+
+class FlickrPhotoSearchService: NetworkService<FlickrPhotoSearchResult> { }
