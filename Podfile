@@ -7,6 +7,7 @@ target 'ImageStream' do
 
   # Pods for ImageStream
   pod 'Alamofire', '~> 5.0.0-beta.5'
+  pod 'PromisesSwift'
 
   target 'ImageStreamTests' do
     inherit! :search_paths
