@@ -14,7 +14,6 @@ enum NetworkResult<T, U: Error> {
     case failure(error: U)
 }
 
-//TODO: logically bind network layer to JSON
 //gets Data from a url
 protocol NetworkDownloader {
     func get(from: String, completion: @escaping (NetworkResult<Data, Error>)->())

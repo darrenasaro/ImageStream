@@ -8,22 +8,26 @@
 
 import Foundation
 
-//downloads and maps JSON to object
+//downloads and maps to object
 class NetworkService<T: Decodable> {
-    private let downloader: NetworkDownloader
     
-    init(downloader: NetworkDownloader = AFDownloader()) {
+    private let downloader: NetworkDownloader
+    private let mapper: Mapper
+    
+    init(downloader: NetworkDownloader = AFDownloader(),
+         mapper: Mapper = JSONMapper()) {
+        
         self.downloader = downloader
+        self.mapper = mapper
     }
     
     func get(from url: String, completion: @escaping (T)->()) {
         downloader.get(from: url) { (result) in
             switch result {
-            case .success(let result):
-                print(result)
+            case .success(let resultData):
                 do {
-                    let searchResult = try JSONDecoder().decode(T.self, from: result)
-                    completion(searchResult)
+                    let model: T = try self.mapper.map(data: resultData)
+                    completion(model)
                 } catch let error {
                     print(error)
                 }
