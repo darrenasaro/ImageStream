@@ -9,24 +9,24 @@
 import Foundation
 import Alamofire
 
-enum NetworkResult<T, U: Error> {
-    case success(result: T)
-    case failure(error: U)
+enum Result<T, U: Error> {
+    case success(_ result: T)
+    case failure(_ error: U)
 }
 
 //gets Data from a url
 protocol NetworkDownloader {
-    func get(from: String, completion: @escaping (NetworkResult<Data, Error>)->())
+    func get(from: String, completion: @escaping (Result<Data, Error>)->())
 }
 
 class AFDownloader: NetworkDownloader {
     
-    func get(from url: String, completion: @escaping (NetworkResult<Data, Error>)->()) {
+    func get(from url: String, completion: @escaping (Result<Data, Error>)->()) {
         AF.request(url).responseData { (response) in
             if let value = response.value {
-                completion(NetworkResult.success(result: value))
+                completion(.success(value))
             } else if let error = response.error {
-                completion(NetworkResult.failure(error: error))
+                completion(.failure(error))
             }
         }
     }

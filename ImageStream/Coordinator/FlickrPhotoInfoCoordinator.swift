@@ -12,15 +12,22 @@ import Promises
 //create simple API for getting models. Acts as middleman between UI and Network layers
 class FlickrPhotoInfoCoordinator {
     
-    func get(completion: @escaping ([FlickrPhotoInfo])->()) {
+    func get(completion: @escaping (Result<[FlickrPhotoInfo],Error>)->()) {
         let searchRequest = FlickrPhotoSearchRequestBuilder(searchString: "surf")
-        searchForPhotos(with: searchRequest.url).then(getPhotoInfoFromSearchResults).then(completion)
+        
+        searchForPhotos(with: searchRequest.url)
+            .then(getPhotoInfoFromSearchResults)
+            .then { (flickrPhotoInfoArray) in completion(.success(flickrPhotoInfoArray)) }
+            .catch { (error) in completion(.failure(error)) }
     }
     
     private func searchForPhotos(with url: String) -> Promise<FlickrPhotoSearchResult> {
         return Promise { (fulfill, reject) in
-            FlickrPhotoSearchService().get(from: url) { (searchResults) in
-                fulfill(searchResults)
+            FlickrPhotoSearchService().get(from: url) { (results) in
+                switch results {
+                case .success(let searchResults): fulfill(searchResults)
+                case .failure(let error)        : reject(error)
+                }
             }
         }
     }
@@ -34,8 +41,11 @@ class FlickrPhotoInfoCoordinator {
     private func getPhotoInfo(id: String) -> Promise<FlickrPhotoInfo> {
         return Promise { (fulfill, reject) in
             let infoRequest = FlickrPhotoInfoRequestBuilder(photoID: id)
-            FlickrPhotoInfoService().get(from: infoRequest.url) { (photoInfo) in
-                fulfill(photoInfo)
+            FlickrPhotoInfoService().get(from: infoRequest.url) { (results) in
+                switch results {
+                case .success(let photoInfo): fulfill(photoInfo)
+                case .failure(let error)    : reject(error)
+                }
             }
         }
     }

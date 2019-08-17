@@ -8,7 +8,6 @@
 
 import Foundation
 
-//downloads and maps to object
 class NetworkService<T: Decodable> {
     
     private let downloader: NetworkDownloader
@@ -21,18 +20,18 @@ class NetworkService<T: Decodable> {
         self.mapper = mapper
     }
     
-    func get(from url: String, completion: @escaping (T)->()) {
+    func get(from url: String, completion: @escaping (Result<T,Error>)->()) {
         downloader.get(from: url) { (result) in
             switch result {
             case .success(let resultData):
                 do {
                     let model: T = try self.mapper.map(data: resultData)
-                    completion(model)
+                    completion(.success(model))
                 } catch let error {
-                    print(error)
+                    completion(.failure(error))
                 }
             case .failure(let error):
-                print(error)
+                completion(.failure(error))
             }
         }
     }

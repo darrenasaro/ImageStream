@@ -13,8 +13,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        FlickrPhotoInfoCoordinator().get { (photos) in
-            print(photos)
+        FlickrPhotoInfoCoordinator().get { (result) in
+            switch result {
+            case .success(let photoInfo): print(photoInfo)
+            case .failure(let error)    : print(error)
+            }
         }
     }
 }
