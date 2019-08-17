@@ -61,7 +61,7 @@
 		1F78EE4D2305E29600E40861 /* ImageStreamUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageStreamUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F78EE512305E29600E40861 /* ImageStreamUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStreamUITests.swift; sourceTree = "<group>"; };
 		1F78EE532305E29600E40861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1F78EE5F2305F4D800E40861 /* FlickrAPIRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FlickrAPIRequestBuilder.swift; path = ../FlickrAPIRequestBuilder.swift; sourceTree = "<group>"; };
+		1F78EE5F2305F4D800E40861 /* FlickrAPIRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrAPIRequestBuilder.swift; sourceTree = "<group>"; };
 		1F78EE612305F56900E40861 /* NetworkDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDownloader.swift; sourceTree = "<group>"; };
 		1F78EE6323060FDC00E40861 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		1F78EE6723061F6900E40861 /* FlickrPhotoSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPhotoSearchResult.swift; sourceTree = "<group>"; };
