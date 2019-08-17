@@ -21,6 +21,9 @@
 		1F78EE6C23064F5800E40861 /* FlickrPhotoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE6B23064F5800E40861 /* FlickrPhotoInfo.swift */; };
 		1F78EE6E23065F6000E40861 /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE6D23065F6000E40861 /* Mapper.swift */; };
 		1F78EE7123072FF200E40861 /* FlickrPhotoInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE7023072FF200E40861 /* FlickrPhotoInfoCoordinator.swift */; };
+		1F78EE762308563300E40861 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE752308563300E40861 /* Themes.swift */; };
+		1F78EE78230862DA00E40861 /* UIColor+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE77230862DA00E40861 /* UIColor+Convenience.swift */; };
+		1F78EE7A2308638A00E40861 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE792308638A00E40861 /* ThemeManager.swift */; };
 		2A154403CA25E77B2DC28B46 /* Pods_ImageStream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29FA1375301235338A7759A /* Pods_ImageStream.framework */; };
 		549804EE16268003DA3950C4 /* Pods_ImageStreamTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15385700AE6B1B5FCCFF40F /* Pods_ImageStreamTests.framework */; };
 		D4433D85C82C65DEE47DEDC5 /* Pods_ImageStreamUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B2B843FFA6077964D8736F0 /* Pods_ImageStreamUITests.framework */; };
@@ -66,6 +69,9 @@
 		1F78EE6B23064F5800E40861 /* FlickrPhotoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPhotoInfo.swift; sourceTree = "<group>"; };
 		1F78EE6D23065F6000E40861 /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
 		1F78EE7023072FF200E40861 /* FlickrPhotoInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPhotoInfoCoordinator.swift; sourceTree = "<group>"; };
+		1F78EE752308563300E40861 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
+		1F78EE77230862DA00E40861 /* UIColor+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Convenience.swift"; sourceTree = "<group>"; };
+		1F78EE792308638A00E40861 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		30656C948C5F11D20536ECB7 /* Pods-ImageStreamUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageStreamUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageStreamUITests/Pods-ImageStreamUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8B2B843FFA6077964D8736F0 /* Pods_ImageStreamUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageStreamUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A15385700AE6B1B5FCCFF40F /* Pods_ImageStreamTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageStreamTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +136,7 @@
 			children = (
 				1F78EE312305E28D00E40861 /* AppDelegate.swift */,
 				1F78EE332305E28D00E40861 /* ViewController.swift */,
+				1F78EE742308560D00E40861 /* UI */,
 				1F78EE6623061CC400E40861 /* Models */,
 				1F78EE6F23072FD900E40861 /* Coordinator */,
 				1F78EE652306107D00E40861 /* Network */,
@@ -185,6 +192,16 @@
 				1F78EE7023072FF200E40861 /* FlickrPhotoInfoCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		1F78EE742308560D00E40861 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1F78EE752308563300E40861 /* Themes.swift */,
+				1F78EE792308638A00E40861 /* ThemeManager.swift */,
+				1F78EE77230862DA00E40861 /* UIColor+Convenience.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		36CC7BB7B8E1FAA94D9C534E /* Frameworks */ = {
@@ -428,6 +445,9 @@
 				1F78EE6423060FDC00E40861 /* NetworkService.swift in Sources */,
 				1F78EE342305E28D00E40861 /* ViewController.swift in Sources */,
 				1F78EE6E23065F6000E40861 /* Mapper.swift in Sources */,
+				1F78EE78230862DA00E40861 /* UIColor+Convenience.swift in Sources */,
+				1F78EE7A2308638A00E40861 /* ThemeManager.swift in Sources */,
+				1F78EE762308563300E40861 /* Themes.swift in Sources */,
 				1F78EE7123072FF200E40861 /* FlickrPhotoInfoCoordinator.swift in Sources */,
 				1F78EE622305F56900E40861 /* NetworkDownloader.swift in Sources */,
 				1F78EE6A2306316400E40861 /* FlickrPhoto.swift in Sources */,
