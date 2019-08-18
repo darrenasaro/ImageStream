@@ -9,7 +9,7 @@
 import Foundation
 
 struct FlickrPhotoSearchResult {
-    let ids: [String]
+    let flickrPhotos: [FlickrPhoto]
     
     enum CodingKeys: String, CodingKey {
         case photos
@@ -24,9 +24,6 @@ extension FlickrPhotoSearchResult: Decodable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let photos = try values.nestedContainer(keyedBy: PhotosCodingKeys.self, forKey: .photos)
-        let photoIDs = try photos.decode([FlickrPhoto].self, forKey: .photo)
-        ids = photoIDs.map({ (id) -> String in
-            return id.id
-        })
+        flickrPhotos = try photos.decode([FlickrPhoto].self, forKey: .photo)
     }
 }

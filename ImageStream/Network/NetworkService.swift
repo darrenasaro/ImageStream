@@ -7,14 +7,16 @@
 //
 
 import Foundation
+import UIKit
 
-class NetworkService<T: Decodable> {
+//url -> model
+class NetworkService<T> {
     
     private let downloader: NetworkDownloader
     private let mapper: Mapper
     
     init(downloader: NetworkDownloader = AFDownloader(),
-         mapper: Mapper = JSONMapper()) {
+         mapper: Mapper) {
         
         self.downloader = downloader
         self.mapper = mapper
@@ -25,7 +27,8 @@ class NetworkService<T: Decodable> {
             switch result {
             case .success(let resultData):
                 do {
-                    let model: T = try self.mapper.map(data: resultData)
+                    //TODO: conditional binding
+                    let model: T = try self.mapper.map(data: resultData) as! T
                     completion(.success(model))
                 } catch let error {
                     completion(.failure(error))
@@ -37,6 +40,20 @@ class NetworkService<T: Decodable> {
     }
 }
 
-class FlickrPhotoSearchService: NetworkService<FlickrPhotoSearchResult> { }
+class FlickrPhotoSearchService: NetworkService<FlickrPhotoSearchResult> {
+    init() {
+        super.init(mapper: JSONMapper<FlickrPhotoSearchResult>())
+    }
+}
 
-class FlickrPhotoInfoService: NetworkService<FlickrPhotoInfo> { }
+class FlickrPhotoInfoService: NetworkService<FlickrPhotoInfo> {
+    init() {
+        super.init(mapper: JSONMapper<FlickrPhotoInfo>())
+    }
+}
+
+class ImageService: NetworkService<UIImage> {
+    init() {
+        super.init(mapper: ImageMapper())
+    }
+}

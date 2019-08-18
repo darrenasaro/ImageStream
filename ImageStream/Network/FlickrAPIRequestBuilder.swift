@@ -43,6 +43,8 @@ class FlickrPhotoSearchRequestBuilder: FlickrAPIRequestBuilder {
         let photoSearchMethod = FlickrAPIMethod.photosSearch
         let photoSearchQueryArgs = ["text" : searchString,
                                    "sort" : "relevance",
+                                   "per_page" : "100",
+                                   "extras" : "description,date_upload,owner_name",
                                    "format" : "json",
                                    "nojsoncallback" : "1"]
         

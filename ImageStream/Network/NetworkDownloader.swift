@@ -14,7 +14,7 @@ enum Result<T, U: Error> {
     case failure(_ error: U)
 }
 
-//gets Data from a url
+//url -> data
 protocol NetworkDownloader {
     func get(from: String, completion: @escaping (Result<Data, Error>)->())
 }

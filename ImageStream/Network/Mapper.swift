@@ -7,14 +7,28 @@
 //
 
 import Foundation
+import UIKit
 
-//converts Data into Decodable object
+enum ImageDataError: Error {
+    case noImageFromData
+}
+//data -> model
 protocol Mapper {
-    func map<T:Decodable>(data: Data) throws -> T
+    func map(data: Data) throws -> Any
 }
 
-class JSONMapper: Mapper {
-    func map<T>(data: Data) throws -> T where T : Decodable {
+class JSONMapper<T:Decodable>: Mapper {
+    func map(data: Data) throws -> Any {
         return try JSONDecoder().decode(T.self, from: data)
+    }
+}
+
+class ImageMapper: Mapper {
+    //TODO: custom error
+    func map(data: Data) throws -> Any {
+        guard let image = UIImage(data: data) else {
+            throw ImageDataError.noImageFromData
+        }
+        return image
     }
 }
