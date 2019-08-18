@@ -31,9 +31,9 @@ class PhotoCollectionViewController: UIViewController {
         return collectionView
     }()
     
-    var viewModel: PhotoCollectionViewModel
+    var viewModel: PhotoFetcher
 
-    init(viewModel: PhotoCollectionViewModel) {
+    init(viewModel: PhotoFetcher) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

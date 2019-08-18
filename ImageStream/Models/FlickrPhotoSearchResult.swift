@@ -8,9 +8,15 @@
 
 import Foundation
 
-struct FlickrPhotoSearchResult {
+protocol PhotoSearchResult: Decodable {
+    associatedtype T:Photo
+    var totalCount: Int { get }
+    var photos: [T] { get }
+}
+
+struct FlickrPhotoSearchResult: PhotoSearchResult {
     let totalCount: Int
-    let flickrPhotos: [FlickrPhoto]
+    let photos: [FlickrPhoto]
     
     enum CodingKeys: String, CodingKey {
         case photos
@@ -25,9 +31,9 @@ struct FlickrPhotoSearchResult {
 extension FlickrPhotoSearchResult: Decodable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        let photos = try values.nestedContainer(keyedBy: PhotosCodingKeys.self, forKey: .photos)
+        let photosContainer = try values.nestedContainer(keyedBy: PhotosCodingKeys.self, forKey: .photos)
         
-        totalCount = Int(try photos.decode(String.self, forKey: .totalCount))!
-        flickrPhotos = try photos.decode([FlickrPhoto].self, forKey: .photo)
+        totalCount = Int(try photosContainer.decode(String.self, forKey: .totalCount))!
+        photos = try photosContainer.decode([FlickrPhoto].self, forKey: .photo)
     }
 }

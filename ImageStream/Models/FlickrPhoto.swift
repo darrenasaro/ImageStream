@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Photo {
+protocol Photo: Decodable {
     var url: String { get }
 }
 

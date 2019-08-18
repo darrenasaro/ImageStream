@@ -8,16 +8,16 @@
 
 import Foundation
 
-class FlickrPhotoCoordinator {
+class PhotoCoordinator<T: PhotoSearchResult> {
     
     private var pageCount = 0
     private let perPage = 25
     
-    func get(completion: @escaping (Result<FlickrPhotoSearchResult,Error>)->()) {
+    func get(completion: @escaping (Result<T,Error>)->()) {
         pageCount += 1
         let searchRequest = FlickrPhotoSearchRequestBuilder(searchString: "surf", page: pageCount, perPage: perPage)
-
-        FlickrPhotoSearchService().get(from: searchRequest.url) { (result) in
+        
+        PhotoSearchService<T>().get(from: searchRequest.url) { (result) in
             completion(result)
         }
     }
