@@ -10,14 +10,15 @@ import Foundation
 
 class FlickrPhotoCoordinator {
     
-    func get(completion: @escaping (Result<[FlickrPhoto],Error>)->()) {
-        let searchRequest = FlickrPhotoSearchRequestBuilder(searchString: "surf")
-        
+    private var pageCount = 0
+    private let perPage = 25
+    
+    func get(completion: @escaping (Result<FlickrPhotoSearchResult,Error>)->()) {
+        pageCount += 1
+        let searchRequest = FlickrPhotoSearchRequestBuilder(searchString: "surf", page: pageCount, perPage: perPage)
+
         FlickrPhotoSearchService().get(from: searchRequest.url) { (result) in
-            switch result {
-            case .success(let searchResult): completion(.success(searchResult.flickrPhotos))
-            case .failure(let error): completion(.failure(error))
-            }
+            completion(result)
         }
     }
 }

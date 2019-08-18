@@ -11,7 +11,7 @@ import UIKit
 class PhotoCollectionViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
-        let itemsPerRow: CGFloat = 3
+        let itemsPerRow: CGFloat = 2
         let itemSpacing: CGFloat = ThemeManager.shared.currentTheme.dimensionTheme.margins
         let itemDimension = (view.frame.width-(itemsPerRow+1)*itemSpacing)/itemsPerRow
         
@@ -24,6 +24,7 @@ class PhotoCollectionViewController: UIViewController {
         //collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
+        collectionView.prefetchDataSource = self
         collectionView.delegate = self
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: "cell")
         
@@ -48,12 +49,12 @@ class PhotoCollectionViewController: UIViewController {
         setupCollectionView()
     }
     
-    func setupViewModel() {
+    private func setupViewModel() {
         viewModel.delegate = self
-        viewModel.fetch()
+        //viewModel.fetch()
     }
     
-    func setupCollectionView() {
+    private func setupCollectionView() {
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -68,16 +69,31 @@ extension PhotoCollectionViewController: PhotoCollectionViewModelDelegate {
     func flickrImagesReceived() {
         collectionView.reloadData()
     }
+    
+    func flickrImagesReceived(newIndeces: NSRange) {
+        var indexPathsToReload = [IndexPath]()
+        for i in Range(newIndeces)! {
+            indexPathsToReload.append(IndexPath(row: i, section: 0))
+        }
+        collectionView.reloadItems(at: indexPathsToReload)
+    }
 }
 
-extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        if indexPaths[0].row > viewModel.photoModels.count {
+            viewModel.fetch()
+        }
+    }
+    
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.photoModels.count
+        return 1000
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let photoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
+        guard indexPath.row < viewModel.photoModels.count else { return photoCell }
         photoCell.viewModel = PhotoCellViewModel(photo: viewModel.photoModels[indexPath.row])
         return photoCell
     }

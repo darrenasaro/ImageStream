@@ -19,7 +19,7 @@ class PhotoCell: UICollectionViewCell {
         return view
     }()
     
-    var viewModel: PhotoCellViewModel! {
+    var viewModel: PhotoCellViewModel? {
         didSet {
             setupViewModel()
         }
@@ -31,6 +31,7 @@ class PhotoCell: UICollectionViewCell {
     }
     
     private func setupViewModel() {
+        guard let viewModel = viewModel else { return }
         viewModel.delegate = self
         viewModel.fetchImage()
     }
@@ -52,6 +53,7 @@ class PhotoCell: UICollectionViewCell {
 
 extension PhotoCell {
     override func prepareForReuse() {
+        viewModel = nil
         imageView.image = nil
         imageView.alpha = 0
     }

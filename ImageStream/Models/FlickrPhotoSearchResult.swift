@@ -9,6 +9,7 @@
 import Foundation
 
 struct FlickrPhotoSearchResult {
+    let totalCount: Int
     let flickrPhotos: [FlickrPhoto]
     
     enum CodingKeys: String, CodingKey {
@@ -17,6 +18,7 @@ struct FlickrPhotoSearchResult {
     
     enum PhotosCodingKeys: String, CodingKey {
         case photo
+        case totalCount = "total"
     }
 }
 
@@ -24,6 +26,8 @@ extension FlickrPhotoSearchResult: Decodable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let photos = try values.nestedContainer(keyedBy: PhotosCodingKeys.self, forKey: .photos)
+        
+        totalCount = Int(try photos.decode(String.self, forKey: .totalCount))!
         flickrPhotos = try photos.decode([FlickrPhoto].self, forKey: .photo)
     }
 }
