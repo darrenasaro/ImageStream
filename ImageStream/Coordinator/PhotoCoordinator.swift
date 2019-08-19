@@ -8,16 +8,22 @@
 
 import Foundation
 
+//manages requests from a url
 class PhotoCoordinator<T: PhotoSearchResult> {
     
     private var pageCount = 0
     private let perPage = 25
     
+    private var urlBuilder: PaginatedURLBuilder
+    
+    init(urlBuilder: PaginatedURLBuilder) {
+        self.urlBuilder = urlBuilder
+    }
+    
     func get(completion: @escaping (Result<T,Error>)->()) {
         pageCount += 1
-        let searchRequest = FlickrPhotoSearchRequestBuilder(searchString: "surf", page: pageCount, perPage: perPage)
-        
-        PhotoSearchService<T>().get(from: searchRequest.url) { (result) in
+        urlBuilder.page = pageCount
+        PhotoSearchService<T>().get(from: urlBuilder.url) { (result) in
             completion(result)
         }
     }

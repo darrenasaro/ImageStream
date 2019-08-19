@@ -23,11 +23,15 @@ class PhotoCollectionViewModel<T: PhotoSearchResult>: PhotoFetcher {
     weak var delegate: PhotoCollectionViewModelDelegate?
     
     //TODO: Inject Coordinator?
-    private var coordinator = PhotoCoordinator<T>()
+    private var coordinator: PhotoCoordinator<T>
     private var fetching = false
     
     var totalPhotoCount = 0
     var photoModels = [Photo]()
+    
+    init(coordinator: PhotoCoordinator<T>) {
+        self.coordinator = coordinator
+    }
 
     func fetch() {
         guard !fetching else { return }

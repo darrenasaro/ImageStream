@@ -47,18 +47,6 @@ class PhotoSearchService<T: PhotoSearchResult>: NetworkService<T> {
     }
 }
 
-//class FlickrPhotoSearchService: NetworkService<FlickrPhotoSearchResult> {
-//    init() {
-//        super.init(mapper: JSONMapper<FlickrPhotoSearchResult>())
-//    }
-//}
-//
-//class FlickrPhotoInfoService: NetworkService<FlickrPhotoInfo> {
-//    init() {
-//        super.init(mapper: JSONMapper<FlickrPhotoInfo>())
-//    }
-//}
-
 class ImageService: NetworkService<UIImage> {
     init() {
         super.init(mapper: ImageMapper())

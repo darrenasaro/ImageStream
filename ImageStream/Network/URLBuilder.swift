@@ -10,18 +10,26 @@ import Foundation
 
 fileprivate let flickrAPIKey = "8fc4e611f9c6ebc9d1f8c48ff92ece14"
 
+protocol URLBuilder {
+    var url: String { get }
+}
+
+protocol PaginatedURLBuilder: URLBuilder {
+    var page: Int { get set }
+    var perPage: Int { get }
+}
 //TODO: Add more methods
 enum FlickrAPIMethod: String {
     case photosSearch = "flickr.photos.search"
     case getInfo = "flickr.photos.getInfo"
 }
 
-class FlickrAPIRequestBuilder {
+class FlickrURLBuilder: URLBuilder {
     private let baseUrl = "https://www.flickr.com/services/rest/"
     
     private var apiKey: String
     private var method: FlickrAPIMethod
-    private var queryArguments: [String : String]
+    var queryArguments: [String : String]
     
     var url: String {
         var url = baseUrl + "?method=" + method.rawValue + "&api_key=" + apiKey
@@ -38,13 +46,23 @@ class FlickrAPIRequestBuilder {
     }
 }
 
-class FlickrPhotoSearchRequestBuilder: FlickrAPIRequestBuilder {
+class FlickrPhotoSearchURLBuilder: FlickrURLBuilder, PaginatedURLBuilder {
+    var page: Int
+    var perPage: Int
+    
+    override var url: String {
+        queryArguments["page"] = "\(page)"
+        queryArguments["per_page"] = "\(perPage)"
+        return super.url
+    }
+    
     init(searchString: String, page: Int, perPage: Int) {
+        self.page = page
+        self.perPage = perPage
+        
         let photoSearchMethod = FlickrAPIMethod.photosSearch
         let photoSearchQueryArgs = ["text" : searchString,
                                     "sort" : "interestingness-desc",
-                                    "page" : "\(page)",
-                                    "per_page" : "\(perPage)",
                                     "extras" : "description,date_upload,owner_name",
                                     "format" : "json",
                                     "nojsoncallback" : "1"]
@@ -54,17 +72,17 @@ class FlickrPhotoSearchRequestBuilder: FlickrAPIRequestBuilder {
     }
 }
 
-class FlickrPhotoInfoRequestBuilder: FlickrAPIRequestBuilder {
-    init(photoID: String) {
-        let photoInfoMethod = FlickrAPIMethod.getInfo
-        let photoInfoQueryArgs = ["photo_id" : photoID,
-                                  "format" : "json",
-                                  "nojsoncallback" : "1"]
-        
-        super.init(method: photoInfoMethod,
-                   queryArguments: photoInfoQueryArgs)
-    }
-}
+//class FlickrPhotoInfoRequestBuilder: FlickrAPIRequestBuilder {
+//    init(photoID: String) {
+//        let photoInfoMethod = FlickrAPIMethod.getInfo
+//        let photoInfoQueryArgs = ["photo_id" : photoID,
+//                                  "format" : "json",
+//                                  "nojsoncallback" : "1"]
+//
+//        super.init(method: photoInfoMethod,
+//                   queryArguments: photoInfoQueryArgs)
+//    }
+//}
 
 
 

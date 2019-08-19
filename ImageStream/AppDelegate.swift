@@ -17,7 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewModel = PhotoCollectionViewModel<FlickrPhotoSearchResult>()
+        let urlBuilder = FlickrPhotoSearchURLBuilder(searchString: "surfing%20australia", page: 1, perPage: 25)
+        let coordinator = PhotoCoordinator<FlickrPhotoSearchResult>(urlBuilder: urlBuilder)
+        let viewModel = PhotoCollectionViewModel<FlickrPhotoSearchResult>(coordinator: coordinator)
         window!.rootViewController = PhotoCollectionViewController(viewModel: viewModel)
         window!.makeKeyAndVisible()
         
