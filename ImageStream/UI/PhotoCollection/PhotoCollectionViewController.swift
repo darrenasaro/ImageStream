@@ -51,7 +51,7 @@ class PhotoCollectionViewController: UIViewController {
     
     private func setupViewModel() {
         viewModel.delegate = self
-        viewModel.fetch()
+        viewModel.fetch(index: 0)
     }
     
     private func setupCollectionView() {
@@ -81,8 +81,9 @@ extension PhotoCollectionViewController: PhotoCollectionViewModelDelegate {
 
 extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        if indexPaths[0].row > viewModel.photoModels.count {
-            viewModel.fetch()
+        let nextIndex = indexPaths[0].row
+        if nextIndex > viewModel.photoModels.count {
+            viewModel.fetch(index: nextIndex)
         }
     }
     

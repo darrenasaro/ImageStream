@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageStream/UI/PhotoCollection/PhotoCollectionViewController.swift"
-            timestampString = "587930854.366919"
+            timestampString = "587933056.007212"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
             landmarkName = "photosReceived(newIndeces:)"
             landmarkType = "7">
          </BreakpointContent>

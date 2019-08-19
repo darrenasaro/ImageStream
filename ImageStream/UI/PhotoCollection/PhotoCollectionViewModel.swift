@@ -17,13 +17,12 @@ protocol PhotoFetcher {
     var totalPhotoCount: Int? { get }
     var photoModels: [Photo] { get }
     var delegate: PhotoCollectionViewModelDelegate? { get set }
-    func fetch()
+    func fetch(index: Int)
 }
 
 class PhotoCollectionViewModel<T: PhotoSearchResult>: PhotoFetcher {
     weak var delegate: PhotoCollectionViewModelDelegate?
     private var coordinator: PhotoCoordinator<T>
-    private var fetching = false
     
     var totalPhotoCount: Int? {
         didSet {
@@ -37,25 +36,18 @@ class PhotoCollectionViewModel<T: PhotoSearchResult>: PhotoFetcher {
         self.coordinator = coordinator
     }
 
-    func fetch() {
-        guard !fetching else { return }
-        fetching = true
-
-        coordinator.get { [unowned self] (result) in
+    func fetch(index: Int) {
+        coordinator.get(index: index) { [unowned self] (result) in
             switch result {
             case .success(let searchResult):
                 let startIndex = self.photoModels.count
-                if self.totalPhotoCount == nil {
-                    self.totalPhotoCount = searchResult.totalCount
-                }
+                if self.totalPhotoCount == nil { self.totalPhotoCount = searchResult.totalCount }
                 self.photoModels.append(contentsOf: searchResult.photos)
                 self.delegate?.photosReceived?(newIndeces: NSRange(location: startIndex, length: searchResult.photos.count))
                 
             case .failure(let error):
                 print(error)
             }
-            
-            self.fetching = false
         }
     }
 }
