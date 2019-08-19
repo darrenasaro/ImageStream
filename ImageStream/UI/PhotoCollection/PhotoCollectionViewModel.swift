@@ -14,7 +14,7 @@ import Foundation
 }
 
 protocol PhotoFetcher {
-    var totalPhotoCount: Int { get }
+    var totalPhotoCount: Int? { get }
     var photoModels: [Photo] { get }
     var delegate: PhotoCollectionViewModelDelegate? { get set }
     func fetch()
@@ -25,11 +25,9 @@ class PhotoCollectionViewModel<T: PhotoSearchResult>: PhotoFetcher {
     private var coordinator: PhotoCoordinator<T>
     private var fetching = false
     
-    var totalPhotoCount: Int = 0 {
-        willSet {
-            if totalPhotoCount == 0 {
-                delegate?.totalPhotoCountReceived?()
-            }
+    var totalPhotoCount: Int? {
+        didSet {
+            self.delegate?.totalPhotoCountReceived?()
         }
     }
 
@@ -47,7 +45,9 @@ class PhotoCollectionViewModel<T: PhotoSearchResult>: PhotoFetcher {
             switch result {
             case .success(let searchResult):
                 let startIndex = self.photoModels.count
-                self.totalPhotoCount = searchResult.totalCount
+                if self.totalPhotoCount == nil {
+                    self.totalPhotoCount = searchResult.totalCount
+                }
                 self.photoModels.append(contentsOf: searchResult.photos)
                 self.delegate?.photosReceived?(newIndeces: NSRange(location: startIndex, length: searchResult.photos.count))
                 

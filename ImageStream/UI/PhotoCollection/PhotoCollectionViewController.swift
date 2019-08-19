@@ -70,7 +70,6 @@ extension PhotoCollectionViewController: PhotoCollectionViewModelDelegate {
         collectionView.reloadData()
     }
     
-    //TODO: "invalid number of items in section" bug
     func photosReceived(newIndeces: NSRange) {
         var indexPathsToReload = [IndexPath]()
         for i in Range(newIndeces)! {
@@ -89,7 +88,7 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
     
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.totalPhotoCount
+        return viewModel.totalPhotoCount ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -19,7 +19,7 @@ class PhotoCoordinator<T: PhotoSearchResult> {
     init(urlBuilder: PaginatedURLBuilder) {
         self.urlBuilder = urlBuilder
     }
-    
+    //TODO: inject service?
     func get(completion: @escaping (Result<T,Error>)->()) {
         pageCount += 1
         urlBuilder.page = pageCount
