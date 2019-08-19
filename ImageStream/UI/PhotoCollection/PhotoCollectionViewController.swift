@@ -51,7 +51,7 @@ class PhotoCollectionViewController: UIViewController {
     
     private func setupViewModel() {
         viewModel.delegate = self
-        //viewModel.fetch()
+        viewModel.fetch()
     }
     
     private func setupCollectionView() {
@@ -66,11 +66,12 @@ class PhotoCollectionViewController: UIViewController {
 }
 
 extension PhotoCollectionViewController: PhotoCollectionViewModelDelegate {
-    func flickrImagesReceived() {
+    func totalPhotoCountReceived() {
         collectionView.reloadData()
     }
     
-    func flickrImagesReceived(newIndeces: NSRange) {
+    //TODO: "invalid number of items in section" bug
+    func photosReceived(newIndeces: NSRange) {
         var indexPathsToReload = [IndexPath]()
         for i in Range(newIndeces)! {
             indexPathsToReload.append(IndexPath(row: i, section: 0))
@@ -88,7 +89,7 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
     
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1000
+        return viewModel.totalPhotoCount
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -9,7 +9,8 @@
 import Foundation
 
 @objc protocol PhotoCollectionViewModelDelegate: class {
-    @objc optional func flickrImagesReceived(newIndeces: NSRange)
+    @objc optional func totalPhotoCountReceived()
+    @objc optional func photosReceived(newIndeces: NSRange)
 }
 
 protocol PhotoFetcher {
@@ -21,12 +22,17 @@ protocol PhotoFetcher {
 
 class PhotoCollectionViewModel<T: PhotoSearchResult>: PhotoFetcher {
     weak var delegate: PhotoCollectionViewModelDelegate?
-    
-    //TODO: Inject Coordinator?
     private var coordinator: PhotoCoordinator<T>
     private var fetching = false
     
-    var totalPhotoCount = 0
+    var totalPhotoCount: Int = 0 {
+        willSet {
+            if totalPhotoCount == 0 {
+                delegate?.totalPhotoCountReceived?()
+            }
+        }
+    }
+
     var photoModels = [Photo]()
     
     init(coordinator: PhotoCoordinator<T>) {
@@ -43,7 +49,7 @@ class PhotoCollectionViewModel<T: PhotoSearchResult>: PhotoFetcher {
                 let startIndex = self.photoModels.count
                 self.totalPhotoCount = searchResult.totalCount
                 self.photoModels.append(contentsOf: searchResult.photos)
-                self.delegate?.flickrImagesReceived?(newIndeces: NSRange(location: startIndex, length: searchResult.photos.count))
+                self.delegate?.photosReceived?(newIndeces: NSRange(location: startIndex, length: searchResult.photos.count))
                 
             case .failure(let error):
                 print(error)
