@@ -65,7 +65,7 @@ class PhotoCollectionViewController: UIViewController {
 }
 
 extension PhotoCollectionViewController: PhotoCollectionViewModelDelegate {
-    //TODO: Only reload visible indexPaths
+
     func photosReceived(newIndeces: NSRange) {
         //if the new totalPhotoCunt exceeds current number of items in the collectionView, reload
         if viewModel.totalPhotoCount > collectionView.numberOfItems(inSection: 0) {
@@ -73,7 +73,8 @@ extension PhotoCollectionViewController: PhotoCollectionViewModelDelegate {
         }
         
         let indexPathsToReload = Array(Range(newIndeces)!).map({ IndexPath(row: $0, section: 0) })
-        collectionView.reloadItems(at: indexPathsToReload)
+        let visibleIndexPathsToReload = Set(collectionView.indexPathsForVisibleItems).intersection(Set(indexPathsToReload))
+        collectionView.reloadItems(at: Array(visibleIndexPathsToReload))
     }
 }
 
