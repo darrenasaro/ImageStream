@@ -20,6 +20,21 @@ class PhotoDetailViewController: UIViewController {
         return view
     }()
     
+    private lazy var bottomBar: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.hasShadow = true
+        return view
+    }()
+    
+    private lazy var usernameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.text = "TEXT"
+        return label
+    }()
+    
     var viewModel: PhotoDetailViewModel
 
     init(viewModel: PhotoDetailViewModel) {
@@ -34,6 +49,8 @@ class PhotoDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupImageView()
+        setupBottomBar()
+        setupUsernameLabel()
         setupViewModel()
     }
     
@@ -41,15 +58,33 @@ class PhotoDetailViewController: UIViewController {
         view.addSubview(imageView)
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            imageView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor)
         ])
     }
     
     private func setupViewModel() {
         viewModel.delegate = self
         viewModel.fetchImage()
+    }
+    
+    private func setupBottomBar() {
+        view.addSubview(bottomBar)
+        NSLayoutConstraint.activate([
+            bottomBar.topAnchor.constraint(equalTo: imageView.bottomAnchor),
+            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            bottomBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+    
+    private func setupUsernameLabel() {
+        bottomBar.addSubview(usernameLabel)
+        NSLayoutConstraint.activate([
+            usernameLabel.topAnchor.constraint(equalTo: bottomBar.layoutMarginsGuide.topAnchor),
+            usernameLabel.bottomAnchor.constraint(equalTo: bottomBar.layoutMarginsGuide.bottomAnchor),
+            usernameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+        ])
     }
 }
 

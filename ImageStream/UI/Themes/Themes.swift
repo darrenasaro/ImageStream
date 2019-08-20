@@ -13,6 +13,7 @@ struct Theme {
     let colorTheme: ColorTheme = ColorTheme()
     let fontTheme: FontTheme = FontTheme()
     let dimensionTheme: DimensionTheme = DimensionTheme()
+    let shadowTheme: ShadowTheme = ShadowTheme()
 }
 
 struct ColorTheme {
@@ -49,4 +50,9 @@ struct DimensionTheme {
     var margins: CGFloat {
         return 2*unit
     }
+}
+
+struct ShadowTheme {
+    let opacity: Float = 0.05
+    let radius: CGFloat = 8.0
 }

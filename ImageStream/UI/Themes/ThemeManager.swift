@@ -19,15 +19,17 @@ final class ThemeManager {
         apply(colorTheme: theme.colorTheme)
         apply(fontTheme: theme.fontTheme)
         apply(dimensionTheme: theme.dimensionTheme)
+        apply(shadowTheme: theme.shadowTheme)
         currentTheme = theme
     }
     
     private func apply(colorTheme: ColorTheme) {
         UIView.appearance().backgroundColor = colorTheme.light
+        UIView.appearance().layer.shadowColor = colorTheme.dark.cgColor
     }
     
     private func apply(fontTheme: FontTheme) {
-        
+
     }
     
     private func apply(dimensionTheme: DimensionTheme) {
@@ -36,5 +38,10 @@ final class ThemeManager {
                                                          left: margins,
                                                          bottom: margins,
                                                          right: margins)
+    }
+    
+    private func apply(shadowTheme: ShadowTheme) {
+        UIView.appearance().layer.shadowOffset = CGSize(width: 0, height: 0)
+        UIView.appearance().layer.shadowRadius = shadowTheme.radius
     }
 }
