@@ -13,7 +13,7 @@ final class ThemeManager {
     
     var currentTheme: Theme = Theme()
     
-    private init() {}
+    private init() { }
     
     func apply(theme: Theme) {
         apply(colorTheme: theme.colorTheme)

@@ -20,7 +20,6 @@ class PhotoCollectionViewController: UIViewController {
         layout.itemSize = CGSize(width: itemDimension, height: itemDimension)
         
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
-        collectionView.backgroundColor = ThemeManager.shared.currentTheme.colorTheme.light
         //collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
@@ -95,6 +94,11 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
         guard indexPath.row < viewModel.photoModels.count else { return photoCell }
         photoCell.viewModel = PhotoCellViewModel(photo: viewModel.photoModels[indexPath.row])
         return photoCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let photoDetailViewModel = PhotoDetailViewModel(photo: viewModel.photoModels[indexPath.row])
+        present(PhotoDetailViewController(viewModel: photoDetailViewModel), animated: true)
     }
 }
 

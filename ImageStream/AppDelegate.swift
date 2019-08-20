@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        ThemeManager.shared.apply(theme: Theme())
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         let urlBuilder = FlickrPhotoSearchURLBuilder(searchString: "minimal", perPage: 25)
         let coordinator = PhotoSearchCoordinator<FlickrPhotoSearchResult>(urlBuilder: urlBuilder)
