@@ -30,9 +30,9 @@ class PhotoCollectionViewController: UIViewController {
         return collectionView
     }()
     
-    var viewModel: PhotoFetcher
+    var viewModel: PhotoCollectionViewModel
 
-    init(viewModel: PhotoFetcher) {
+    init(viewModel: PhotoCollectionViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -50,7 +50,7 @@ class PhotoCollectionViewController: UIViewController {
     
     private func setupViewModel() {
         viewModel.delegate = self
-        viewModel.fetch(index: 0)
+        viewModel.getPhoto(at: 0)
     }
     
     private func setupCollectionView() {
@@ -65,6 +65,7 @@ class PhotoCollectionViewController: UIViewController {
 }
 
 extension PhotoCollectionViewController: PhotoCollectionViewModelDelegate {
+    //TODO: Only reload visible indexPaths
     func photosReceived(newIndeces: NSRange) {
         //if the new totalPhotoCunt exceeds current number of items in the collectionView, reload
         if viewModel.totalPhotoCount > collectionView.numberOfItems(inSection: 0) {
@@ -80,7 +81,7 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         let nextIndex = indexPaths[0].row
         if nextIndex > viewModel.photoModels.count {
-            viewModel.fetch(index: nextIndex)
+            viewModel.getPhoto(at: nextIndex)
         }
     }
     

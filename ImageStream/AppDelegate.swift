@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let urlBuilder = FlickrPhotoSearchURLBuilder(searchString: "minimal", perPage: 25)
-        let coordinator = PhotoSearchCoordinator<FlickrPhotoSearchResult>(urlBuilder: urlBuilder)
-        let viewModel = PhotoCollectionViewModel<FlickrPhotoSearchResult>(coordinator: coordinator)
+        let photoSearcher = PhotoSearchCoordinator<FlickrPhotoSearchResult>(urlBuilder: urlBuilder)
+        let viewModel = PhotoCollectionViewModel(searcher: photoSearcher)
         window!.rootViewController = PhotoCollectionViewController(viewModel: viewModel)
         window!.makeKeyAndVisible()
         

@@ -12,30 +12,33 @@ import Foundation
     @objc optional func photosReceived(newIndeces: NSRange)
 }
 
-protocol PhotoFetcher {
-    var totalPhotoCount: Int { get }
-    var photoModels: [Photo] { get }
-    var delegate: PhotoCollectionViewModelDelegate? { get set }
-    func fetch(index: Int)
-}
-
-class PhotoCollectionViewModel<T: PhotoSearchResult>: PhotoFetcher {
+//gets pages of photos as they are needed
+class PhotoCollectionViewModel {
     
     weak var delegate: PhotoCollectionViewModelDelegate?
-    private var coordinator: PhotoSearchCoordinator<T>
+    private var searcher: PhotoSearcher
     
     var totalPhotoCount: Int {
-        return coordinator.totalPhotoCount ?? 0
+        return searcher.totalPhotoCount ?? 0
     }
 
     var photoModels = [Photo]()
+    private var lastFetchedPage: Int = 0
     
-    init(coordinator: PhotoSearchCoordinator<T>) {
-        self.coordinator = coordinator
+    init(searcher: PhotoSearcher) {
+        self.searcher = searcher
     }
 
-    func fetch(index: Int) {
-        coordinator.getPhotosForPageContaining(index: index) { [unowned self] (result) in
+    
+    func getPhoto(at index: Int) {
+        let pageToGet = searcher.page(for: index)
+        guard pageToGet > lastFetchedPage else { return }
+        searchForPhotos(on: pageToGet)
+        lastFetchedPage += 1
+    }
+    
+    private func searchForPhotos(on page: Int) {
+        searcher.getPhotos(for: page) { [unowned self] (result) in
             switch result {
             case .success(let photos):
                 let startIndex = self.photoModels.count

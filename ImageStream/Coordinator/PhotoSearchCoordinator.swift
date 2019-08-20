@@ -8,22 +8,25 @@
 
 import Foundation
 
-//manages requests from a url
-class PhotoSearchCoordinator<T: PhotoSearchResult> {
+protocol PhotoSearcher {
+    var totalPhotoCount: Int? { get }
+    func page(for index: Int) -> Int
+    func getPhotos(for page: Int, completion: @escaping (Result<[Photo],Error>)->())
+}
+
+//uses PhotoSearchService and PaginatedURLBuilder to search for photo pages
+class PhotoSearchCoordinator<T: PhotoSearchResult>: PhotoSearcher {
     
     private var urlBuilder: PaginatedURLBuilder
-    private var lastFetchedPage = 0
     var totalPhotoCount: Int?
     
     init(urlBuilder: PaginatedURLBuilder) {
         self.urlBuilder = urlBuilder
     }
-    //TODO: shouldn't be responsible for not refetching the same page?
-    func getPhotosForPageContaining(index: Int, completion: @escaping (Result<[Photo],Error>)->()) {
-        guard page(for: index) > lastFetchedPage else { return }
-        urlBuilder.page = lastFetchedPage + 1
+
+    func getPhotos(for page: Int, completion: @escaping (Result<[Photo],Error>)->()) {
+        urlBuilder.page = page
         getPhotos(with: completion)
-        lastFetchedPage += 1
     }
     
     //TODO: inject service?
@@ -39,7 +42,7 @@ class PhotoSearchCoordinator<T: PhotoSearchResult> {
         }
     }
     
-    private func page(for index: Int) -> Int {
+    func page(for index: Int) -> Int {
         return index/urlBuilder.perPage + 1
     }
 }
