@@ -47,8 +47,8 @@ class FlickrURLBuilder: URLBuilder {
 }
 
 class FlickrPhotoSearchURLBuilder: FlickrURLBuilder, PaginatedURLBuilder {
-    var page: Int
-    var perPage: Int
+    var page: Int = 0
+    let perPage: Int
     
     override var url: String {
         queryArguments["page"] = "\(page)"
@@ -56,10 +56,8 @@ class FlickrPhotoSearchURLBuilder: FlickrURLBuilder, PaginatedURLBuilder {
         return super.url
     }
     
-    init(searchString: String, page: Int, perPage: Int) {
-        self.page = page
+    init(searchString: String, perPage: Int) {
         self.perPage = perPage
-        
         let photoSearchMethod = FlickrAPIMethod.photosSearch
         let photoSearchQueryArgs = ["text" : searchString,
                                     "sort" : "interestingness-desc",
@@ -71,18 +69,6 @@ class FlickrPhotoSearchURLBuilder: FlickrURLBuilder, PaginatedURLBuilder {
                    queryArguments: photoSearchQueryArgs)
     }
 }
-
-//class FlickrPhotoInfoRequestBuilder: FlickrAPIRequestBuilder {
-//    init(photoID: String) {
-//        let photoInfoMethod = FlickrAPIMethod.getInfo
-//        let photoInfoQueryArgs = ["photo_id" : photoID,
-//                                  "format" : "json",
-//                                  "nojsoncallback" : "1"]
-//
-//        super.init(method: photoInfoMethod,
-//                   queryArguments: photoInfoQueryArgs)
-//    }
-//}
 
 
 

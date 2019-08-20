@@ -66,15 +66,13 @@ class PhotoCollectionViewController: UIViewController {
 }
 
 extension PhotoCollectionViewController: PhotoCollectionViewModelDelegate {
-    func totalPhotoCountReceived() {
-        collectionView.reloadData()
-    }
-    
     func photosReceived(newIndeces: NSRange) {
-        var indexPathsToReload = [IndexPath]()
-        for i in Range(newIndeces)! {
-            indexPathsToReload.append(IndexPath(row: i, section: 0))
+        //if the new totalPhotoCunt exceeds current number of items in the collectionView, reload
+        if viewModel.totalPhotoCount > collectionView.numberOfItems(inSection: 0) {
+            return collectionView.reloadData()
         }
+        
+        let indexPathsToReload = Array(Range(newIndeces)!).map({ IndexPath(row: $0, section: 0) })
         collectionView.reloadItems(at: indexPathsToReload)
     }
 }
@@ -89,7 +87,7 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
     
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.totalPhotoCount ?? 0
+        return viewModel.totalPhotoCount
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -136,6 +136,13 @@
 			path = PhotoCollection;
 			sourceTree = "<group>";
 		};
+		1F382FE7230B7A5E00669A58 /* PhotoDetail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PhotoDetail;
+			sourceTree = "<group>";
+		};
 		1F78EE252305E28D00E40861 = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +231,7 @@
 		1F78EE742308560D00E40861 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				1F382FE7230B7A5E00669A58 /* PhotoDetail */,
 				1F382FE42308D34500669A58 /* PhotoCollection */,
 				1F78EE7B2308705B00E40861 /* Themes */,
 			);
