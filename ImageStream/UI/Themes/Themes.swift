@@ -27,8 +27,8 @@ struct FontTheme {
     let normalFontName = "Avenir-Heavy"
     let boldFontName = "Avenir-Black"
     
-    let smallFontSize: CGFloat = 9
-    let largeFontSize: CGFloat = 13
+    let smallFontSize: CGFloat = 12
+    let largeFontSize: CGFloat = 14
     
     let kerning: CGFloat = 3
     

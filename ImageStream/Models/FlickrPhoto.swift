@@ -10,6 +10,7 @@ import Foundation
 
 protocol Photo: Decodable {
     var url: String { get }
+    var username: String { get }
 }
 
 struct FlickrPhoto: Photo {

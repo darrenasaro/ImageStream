@@ -27,11 +27,11 @@ class PhotoDetailViewController: UIViewController {
         return view
     }()
     
-    private lazy var usernameLabel: UILabel = {
-        let label = UILabel()
+    private lazy var usernameLabel: Label = {
+        let label = Label(style: .titleSmall)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        label.text = "TEXT"
+        label.text = viewModel.photo.username
         return label
     }()
     
@@ -48,9 +48,11 @@ class PhotoDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupImageView()
         setupBottomBar()
         setupUsernameLabel()
+        
         setupViewModel()
     }
     
@@ -61,11 +63,6 @@ class PhotoDetailViewController: UIViewController {
             imageView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor)
         ])
-    }
-    
-    private func setupViewModel() {
-        viewModel.delegate = self
-        viewModel.fetchImage()
     }
     
     private func setupBottomBar() {
@@ -86,6 +83,12 @@ class PhotoDetailViewController: UIViewController {
             usernameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
         ])
     }
+    
+    private func setupViewModel() {
+        viewModel.delegate = self
+        viewModel.fetchImage()
+    }
+    
 }
 
 extension PhotoDetailViewController: PhotoDetailViewModelDelegate {
