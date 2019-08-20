@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         let urlBuilder = FlickrPhotoSearchURLBuilder(searchString: "minimal", page: 1, perPage: 25)
-        let coordinator = PhotoCoordinator<FlickrPhotoSearchResult>(urlBuilder: urlBuilder)
+        let coordinator = PhotoSearchCoordinator<FlickrPhotoSearchResult>(urlBuilder: urlBuilder)
         let viewModel = PhotoCollectionViewModel<FlickrPhotoSearchResult>(coordinator: coordinator)
         window!.rootViewController = PhotoCollectionViewController(viewModel: viewModel)
         window!.makeKeyAndVisible()

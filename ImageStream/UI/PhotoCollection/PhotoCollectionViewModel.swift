@@ -22,7 +22,7 @@ protocol PhotoFetcher {
 
 class PhotoCollectionViewModel<T: PhotoSearchResult>: PhotoFetcher {
     weak var delegate: PhotoCollectionViewModelDelegate?
-    private var coordinator: PhotoCoordinator<T>
+    private var coordinator: PhotoSearchCoordinator<T>
     
     var totalPhotoCount: Int? {
         didSet {
@@ -32,7 +32,7 @@ class PhotoCollectionViewModel<T: PhotoSearchResult>: PhotoFetcher {
 
     var photoModels = [Photo]()
     
-    init(coordinator: PhotoCoordinator<T>) {
+    init(coordinator: PhotoSearchCoordinator<T>) {
         self.coordinator = coordinator
     }
 

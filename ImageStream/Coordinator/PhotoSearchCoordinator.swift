@@ -9,7 +9,7 @@
 import Foundation
 
 //manages requests from a url
-class PhotoCoordinator<T: PhotoSearchResult> {
+class PhotoSearchCoordinator<T: PhotoSearchResult> {
     
     private var lastFetchedPage = 0
     private let perPage = 25
