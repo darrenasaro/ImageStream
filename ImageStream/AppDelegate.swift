@@ -12,17 +12,16 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var router: MainRouter?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         ThemeManager.shared.apply(theme: Theme())
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        let urlBuilder = FlickrPhotoSearchURLBuilder(searchString: "minimal", perPage: 25)
-        let photoSearcher = PhotoSearchCoordinator<FlickrPhotoSearchResult>(urlBuilder: urlBuilder)
-        let viewModel = PhotoCollectionViewModel(searcher: photoSearcher)
-        window!.rootViewController = PhotoCollectionViewController(viewModel: viewModel)
+        router = MainRouter()
+        router?.createInitialViewController()
+        window!.rootViewController = router?.initialViewController
         window!.makeKeyAndVisible()
         
         return true

@@ -31,6 +31,7 @@ class PhotoCollectionViewController: UIViewController {
     }()
     
     var viewModel: PhotoCollectionViewModel
+    weak var router: MainRouter?
 
     init(viewModel: PhotoCollectionViewModel) {
         self.viewModel = viewModel
@@ -99,11 +100,7 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let photoDetailViewModel = PhotoDetailViewModel(photo: viewModel.photoModels[indexPath.row])
-        let photoDetailViewController = PhotoDetailViewController(viewModel: photoDetailViewModel)
-        let swipeViewController = SwipeViewController(viewController: photoDetailViewController)
-        swipeViewController.modalPresentationStyle = .overCurrentContext
-        present(swipeViewController, animated: false)
+        router?.showPhotoDetail(photo: viewModel.photoModels[indexPath.row])
     }
 }
 
