@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-//url -> model
+/// Downloads Data from a URL and maps it to a type.
 class NetworkService<T> {
     
     private let downloader: NetworkDownloader
@@ -27,7 +27,6 @@ class NetworkService<T> {
             switch result {
             case .success(let resultData):
                 do {
-                    //TODO: conditional binding
                     let model: T = try self.mapper.map(data: resultData) as! T
                     completion(.success(model))
                 } catch let error {
@@ -37,18 +36,5 @@ class NetworkService<T> {
                 completion(.failure(error))
             }
         }
-    }
-}
-
-//url -> PhotoSearchResult model
-class PhotoSearchService<T: PhotoSearchResult>: NetworkService<T> {
-    init() {
-        super.init(mapper: JSONMapper<T>())
-    }
-}
-
-class ImageService: NetworkService<UIImage> {
-    init() {
-        super.init(mapper: ImageMapper())
     }
 }

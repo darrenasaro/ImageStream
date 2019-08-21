@@ -1,24 +1,15 @@
 //
-//  File.swift
+//  AFDownloader.swift
 //  ImageStream
 //
-//  Created by Darren Asaro on 8/15/19.
+//  Created by Darren Asaro on 8/21/19.
 //  Copyright © 2019 Darren Asaro. All rights reserved.
 //
 
 import Foundation
 import Alamofire
 
-enum Result<T, U: Error> {
-    case success(_ result: T)
-    case failure(_ error: U)
-}
-
-//url -> data
-protocol NetworkDownloader {
-    func get(from: String, completion: @escaping (Result<Data, Error>)->())
-}
-
+/// Gets Data from a URL using Alamofire.
 class AFDownloader: NetworkDownloader {
     
     func get(from url: String, completion: @escaping (Result<Data, Error>)->()) {
