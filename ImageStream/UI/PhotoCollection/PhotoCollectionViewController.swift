@@ -100,7 +100,10 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let photoDetailViewModel = PhotoDetailViewModel(photo: viewModel.photoModels[indexPath.row])
-        present(PhotoDetailViewController(viewModel: photoDetailViewModel), animated: true)
+        let photoDetailViewController = PhotoDetailViewController(viewModel: photoDetailViewModel)
+        let swipeViewController = SwipeViewController(viewController: photoDetailViewController)
+        swipeViewController.modalPresentationStyle = .overCurrentContext
+        present(swipeViewController, animated: false)
     }
 }
 
