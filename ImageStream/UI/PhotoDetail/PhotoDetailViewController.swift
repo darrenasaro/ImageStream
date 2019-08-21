@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/// Detailed view for a Photo model
 class PhotoDetailViewController: UIViewController {
     
     private lazy var imageView: UIImageView = {
@@ -86,7 +87,7 @@ class PhotoDetailViewController: UIViewController {
     
     private func setupViewModel() {
         viewModel.delegate = self
-        viewModel.fetchImage()
+        viewModel.getImage()
     }
     
 }

@@ -13,6 +13,7 @@ import UIKit
     @objc optional func received(image: UIImage)
 }
 
+/// Holds a photo model which it can get an image from.
 class PhotoCellViewModel {
     
     weak var delegate: PhotoCellViewModelDelegate?
@@ -24,7 +25,8 @@ class PhotoCellViewModel {
     }
     
     //TODO: Add functionality to display error
-    func fetchImage() {
+    /// Attempts to retrieve an image using the photo properties' url, calling the delegate if successful.
+    func getImage() {
         PhotoDataCoordinator().getData(from: photo.url) { [weak self] (result) in
             switch result {
             case .success(let image): self?.delegate?.received?(image: image)

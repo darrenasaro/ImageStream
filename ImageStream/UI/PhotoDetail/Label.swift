@@ -8,8 +8,9 @@
 
 import UIKit
 
+/// A Label with custom styles
 class Label: UILabel {
-    
+    /// Adjusted to account for attributed text
     override var intrinsicContentSize: CGSize {
         let originalSize = super.intrinsicContentSize
         let newWidth = attributedText?.size().width ?? originalSize.width
@@ -35,7 +36,7 @@ class Label: UILabel {
         textColor = colorTheme.dark
         
         switch style {
-        case .titleBig  : font = fontTheme.largeBold
+        case .titleBig: font = fontTheme.largeBold
         case .titleSmall: font = fontTheme.smallBold
         }
     }

@@ -9,10 +9,10 @@
 import Foundation
 
 @objc protocol PhotoCollectionViewModelDelegate: class {
-    @objc optional func photosReceived(newIndeces: NSRange)
+    @objc optional func photosReceived(for indeces: NSRange)
 }
 
-//gets pages of photos as they are needed
+/// Stores all the Photo models and gets more as needed.
 class PhotoCollectionViewModel {
     
     weak var delegate: PhotoCollectionViewModelDelegate?
@@ -28,8 +28,8 @@ class PhotoCollectionViewModel {
     init(searcher: PhotoSearcher) {
         self.searcher = searcher
     }
-
     
+    /// Gets the page of photos for the index if it hasn't already been retrieved
     func getPhoto(at index: Int) {
         let pageToGet = searcher.page(for: index)
         guard pageToGet > lastFetchedPage else { return }
@@ -43,7 +43,7 @@ class PhotoCollectionViewModel {
             case .success(let photos):
                 let startIndex = self.photoModels.count
                 self.photoModels.append(contentsOf: photos)
-                self.delegate?.photosReceived?(newIndeces: NSRange(location: startIndex, length: photos.count))
+                self.delegate?.photosReceived?(for: NSRange(location: startIndex, length: photos.count))
                 
             case .failure(let error):
                 print(error)

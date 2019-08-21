@@ -9,11 +9,13 @@
 import Foundation
 import UIKit
 
+/// Abstraction for a type that can manage the routing between UIViewControllers.
 protocol Router {
     var initialViewController: UIViewController? { get }
     func createInitialViewController()
 }
 
+/// Manages the routing between all UIViewControllers in the app
 class MainRouter: Router {
 
     var initialViewController: UIViewController?

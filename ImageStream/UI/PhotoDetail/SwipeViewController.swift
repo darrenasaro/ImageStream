@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Allows an injected UIViewController to be dismissed with a swipe.
 class SwipeViewController: UIViewController {
     
     private lazy var scrollView: UIScrollView = {

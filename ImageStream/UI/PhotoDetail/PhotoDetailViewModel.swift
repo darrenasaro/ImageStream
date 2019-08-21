@@ -13,6 +13,7 @@ import UIKit
     @objc optional func received(image: UIImage)
 }
 
+/// Retrieves UIImage for a photo and notifies a delegate.
 class PhotoDetailViewModel {
     
     weak var delegate: PhotoDetailViewModelDelegate?
@@ -24,7 +25,7 @@ class PhotoDetailViewModel {
     }
     
     //TODO: Add functionality to display error
-    func fetchImage() {
+    func getImage() {
         PhotoDataCoordinator().getData(from: photo.url) { [weak self] (result) in
             switch result {
             case .success(let image): self?.delegate?.received?(image: image)

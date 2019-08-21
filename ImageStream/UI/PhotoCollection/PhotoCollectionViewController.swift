@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Displays a collection of photos
 class PhotoCollectionViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
@@ -20,7 +21,6 @@ class PhotoCollectionViewController: UIViewController {
         layout.itemSize = CGSize(width: itemDimension, height: itemDimension)
         
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
-        //collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
@@ -44,7 +44,7 @@ class PhotoCollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
         setupViewModel()
         setupCollectionView()
     }
@@ -66,41 +66,40 @@ class PhotoCollectionViewController: UIViewController {
 }
 
 extension PhotoCollectionViewController: PhotoCollectionViewModelDelegate {
-
-    func photosReceived(newIndeces: NSRange) {
-        //if the new totalPhotoCunt exceeds current number of items in the collectionView, reload
+    /// Reload the whole collectionView if it's inconsistent with viewModel, otherwise reload visible indexPaths of the newly acquired photos
+    func photosReceived(for indeces: NSRange) {
         if viewModel.totalPhotoCount > collectionView.numberOfItems(inSection: 0) {
             return collectionView.reloadData()
         }
         
-        let indexPathsToReload = Array(Range(newIndeces)!).map({ IndexPath(row: $0, section: 0) })
+        let indexPathsToReload = Array(Range(indeces)!).map({ IndexPath(row: $0, section: 0) })
         let visibleIndexPathsToReload = Set(collectionView.indexPathsForVisibleItems).intersection(Set(indexPathsToReload))
         collectionView.reloadItems(at: Array(visibleIndexPathsToReload))
     }
 }
 
 extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.totalPhotoCount
+    }
+    /// Display a PhotoCell with a viewModel if the corresponding Photo exists.
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let photoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
+        guard viewModel.photoModels.indices.contains(indexPath.row) else { return photoCell }
+        photoCell.viewModel = PhotoCellViewModel(photo: viewModel.photoModels[indexPath.row])
+        return photoCell
+    }
+    // Show detailed view of photo for selected index.
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        router?.showPhotoDetail(photo: viewModel.photoModels[indexPath.row])
+    }
+    /// Request more photos from viewModel for the upcoming indeces if necessary.
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         let nextIndex = indexPaths[0].row
         if nextIndex > viewModel.photoModels.count {
             viewModel.getPhoto(at: nextIndex)
         }
-    }
-    
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.totalPhotoCount
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let photoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
-        guard indexPath.row < viewModel.photoModels.count else { return photoCell }
-        photoCell.viewModel = PhotoCellViewModel(photo: viewModel.photoModels[indexPath.row])
-        return photoCell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        router?.showPhotoDetail(photo: viewModel.photoModels[indexPath.row])
     }
 }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Cell that displays a network retrieved photo
 class PhotoCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
@@ -33,7 +34,7 @@ class PhotoCell: UICollectionViewCell {
     private func setupViewModel() {
         guard let viewModel = viewModel else { return }
         viewModel.delegate = self
-        viewModel.fetchImage()
+        viewModel.getImage()
     }
     
     private func setupImageView() {

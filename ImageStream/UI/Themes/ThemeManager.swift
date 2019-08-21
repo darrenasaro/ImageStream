@@ -7,7 +7,7 @@
 //
 import UIKit
 
-//singleton since only one theme for whole app
+/// Applies and holds a Theme which is consistent across the entire app.
 final class ThemeManager {
     static let shared = ThemeManager()
     
