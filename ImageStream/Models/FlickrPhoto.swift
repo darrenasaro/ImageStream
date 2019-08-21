@@ -8,11 +8,13 @@
 
 import Foundation
 
+/// Abstraction for a type that describes a photo
 protocol Photo: Decodable {
     var url: String { get }
     var username: String { get }
 }
 
+/// Photo that can be decoded from JSON from the Flickr API
 struct FlickrPhoto: Photo {
     let id: String
     let description: String

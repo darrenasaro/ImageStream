@@ -8,12 +8,16 @@
 
 import Foundation
 
+/// Abstraction for a type that describes a result from a search for photos.
 protocol PhotoSearchResult: Decodable {
     associatedtype T:Photo
+    /// The total number of photos that the search is capable of returning.
     var totalCount: Int { get }
+    /// The photos that the search returned.
     var photos: [T] { get }
 }
 
+/// PhotoSearchResult that can be decoded from JSON from the Flickr API.
 struct FlickrPhotoSearchResult: PhotoSearchResult {
     let totalCount: Int
     let photos: [FlickrPhoto]

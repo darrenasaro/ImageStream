@@ -37,7 +37,6 @@
 		1F78EE6423060FDC00E40861 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE6323060FDC00E40861 /* NetworkService.swift */; };
 		1F78EE6823061F6900E40861 /* FlickrPhotoSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE6723061F6900E40861 /* FlickrPhotoSearchResult.swift */; };
 		1F78EE6A2306316400E40861 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE692306316400E40861 /* FlickrPhoto.swift */; };
-		1F78EE6C23064F5800E40861 /* FlickrPhotoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE6B23064F5800E40861 /* FlickrPhotoInfo.swift */; };
 		1F78EE6E23065F6000E40861 /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE6D23065F6000E40861 /* Mapper.swift */; };
 		1F78EE762308563300E40861 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE752308563300E40861 /* Themes.swift */; };
 		1F78EE78230862DA00E40861 /* UIColor+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE77230862DA00E40861 /* UIColor+Convenience.swift */; };
@@ -105,7 +104,6 @@
 		1F78EE6323060FDC00E40861 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		1F78EE6723061F6900E40861 /* FlickrPhotoSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPhotoSearchResult.swift; sourceTree = "<group>"; };
 		1F78EE692306316400E40861 /* FlickrPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
-		1F78EE6B23064F5800E40861 /* FlickrPhotoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPhotoInfo.swift; sourceTree = "<group>"; };
 		1F78EE6D23065F6000E40861 /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
 		1F78EE752308563300E40861 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		1F78EE77230862DA00E40861 /* UIColor+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Convenience.swift"; sourceTree = "<group>"; };
@@ -300,7 +298,6 @@
 			children = (
 				1F78EE6723061F6900E40861 /* FlickrPhotoSearchResult.swift */,
 				1F78EE692306316400E40861 /* FlickrPhoto.swift */,
-				1F78EE6B23064F5800E40861 /* FlickrPhotoInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -578,7 +575,6 @@
 				1F78EE6823061F6900E40861 /* FlickrPhotoSearchResult.swift in Sources */,
 				1F383002230DBEFB00669A58 /* ImageDownloadService.swift in Sources */,
 				1F382FF5230CADA600669A58 /* UIViewController+Add+Remove.swift in Sources */,
-				1F78EE6C23064F5800E40861 /* FlickrPhotoInfo.swift in Sources */,
 				1F78EE6423060FDC00E40861 /* NetworkService.swift in Sources */,
 				1F382FFD230DBDBB00669A58 /* ImageMapper.swift in Sources */,
 				1F38300C230DCFE300669A58 /* APIURLBuilder.swift in Sources */,
