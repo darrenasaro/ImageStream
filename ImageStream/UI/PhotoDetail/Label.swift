@@ -30,25 +30,20 @@ class Label: UILabel {
     }
     
     private func setup() {
-        let fontTheme = ThemeManager.shared.currentTheme.fontTheme
-        let colorTheme = ThemeManager.shared.currentTheme.colorTheme
-        
-        textColor = colorTheme.dark
+        textColor = ThemeManager.color.dark
         
         switch style {
-        case .titleBig: font = fontTheme.largeBold
-        case .titleSmall: font = fontTheme.smallBold
+        case .titleBig: font = ThemeManager.font.largeBold
+        case .titleSmall: font = ThemeManager.font.smallBold
         }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        let fontTheme = ThemeManager.shared.currentTheme.fontTheme
-        
+
         switch style {
         case .titleBig:
-            kern(fontTheme.kerning)
+            kern(ThemeManager.font.kerning)
             invalidateIntrinsicContentSize()
         case .titleSmall:
             break

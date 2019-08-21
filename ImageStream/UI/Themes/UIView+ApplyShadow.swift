@@ -12,7 +12,7 @@ import UIKit
 extension UIView {
     var hasShadow: Bool {
         set(newValue) {
-            layer.shadowOpacity = newValue ? ThemeManager.shared.currentTheme.shadowTheme.opacity : 0
+            layer.shadowOpacity = newValue ? ThemeManager.shadow.opacity : 0
         }
         get {
             return layer.shadowOpacity != 0

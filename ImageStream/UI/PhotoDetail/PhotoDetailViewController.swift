@@ -24,6 +24,7 @@ class PhotoDetailViewController: UIViewController {
     private lazy var bottomBar: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = ThemeManager.color.light
         view.hasShadow = true
         return view
     }()
@@ -89,7 +90,6 @@ class PhotoDetailViewController: UIViewController {
         viewModel.delegate = self
         viewModel.getImage()
     }
-    
 }
 
 extension PhotoDetailViewController: PhotoDetailViewModelDelegate {

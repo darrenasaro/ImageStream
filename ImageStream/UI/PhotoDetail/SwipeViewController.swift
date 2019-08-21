@@ -15,7 +15,6 @@ class SwipeViewController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.backgroundColor = .clear
-
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
@@ -61,15 +60,10 @@ class SwipeViewController: UIViewController {
     
     private func setupViewController() {
         add(viewController, to: scrollView)
-        viewController.view.backgroundColor = ThemeManager.shared.currentTheme.colorTheme.light
+        viewController.view.backgroundColor = ThemeManager.color.light
         viewController.view.frame = scrollView.bounds
         viewController.view.frame.origin.y = scrollView.frame.height
         viewController.view.layoutIfNeeded()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        makeContextBeneathVisible()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -103,16 +97,6 @@ extension SwipeViewController: UIScrollViewDelegate {
         let page: Int = Int(scrollView.contentOffset.y/scrollView.frame.size.height)
         if page == 0 {
             dismiss()
-        }
-    }
-}
-
-extension SwipeViewController {
-    func makeContextBeneathVisible() {
-        for view in UIApplication.shared.keyWindow!.subviews {
-            if view.isKind(of: NSClassFromString("UITransitionView")!) {
-                view.backgroundColor = nil
-            }
         }
     }
 }

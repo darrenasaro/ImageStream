@@ -13,7 +13,7 @@ class PhotoCollectionViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let itemsPerRow: CGFloat = 2
-        let itemSpacing: CGFloat = ThemeManager.shared.currentTheme.dimensionTheme.margins
+        let itemSpacing: CGFloat = ThemeManager.dimension.margins
         let itemDimension = (view.frame.width-(itemsPerRow+1)*itemSpacing)/itemsPerRow
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -22,6 +22,7 @@ class PhotoCollectionViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = ThemeManager.color.light
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
         collectionView.delegate = self

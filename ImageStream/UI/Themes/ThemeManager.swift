@@ -9,9 +9,15 @@ import UIKit
 
 /// Applies and holds a Theme which is consistent across the entire app.
 final class ThemeManager {
+    
     static let shared = ThemeManager()
     
     var currentTheme: Theme = Theme()
+    
+    static var color: ColorTheme { return ThemeManager.shared.currentTheme.colorTheme }
+    static var font: FontTheme { return ThemeManager.shared.currentTheme.fontTheme }
+    static var dimension: DimensionTheme { return ThemeManager.shared.currentTheme.dimensionTheme }
+    static var shadow: ShadowTheme { return ThemeManager.shared.currentTheme.shadowTheme }
     
     private init() { }
     
@@ -24,7 +30,7 @@ final class ThemeManager {
     }
     
     private func apply(colorTheme: ColorTheme) {
-        UIView.appearance().backgroundColor = colorTheme.light
+        //UIView.appearance().backgroundColor = colorTheme.light
         UIView.appearance().layer.shadowColor = colorTheme.dark.cgColor
     }
     
