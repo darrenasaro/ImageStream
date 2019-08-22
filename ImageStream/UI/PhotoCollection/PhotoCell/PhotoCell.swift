@@ -34,7 +34,7 @@ class PhotoCell: UICollectionViewCell {
     private func setupViewModel() {
         guard let viewModel = viewModel else { return }
         viewModel.delegate = self
-        viewModel.getImage()
+        viewModel.fetchImage()
     }
     
     private func setupImageView() {

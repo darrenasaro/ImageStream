@@ -22,8 +22,8 @@ class NetworkService<T> {
         self.mapper = mapper
     }
     
-    func get(from url: String, completion: @escaping (Result<T,Error>)->()) {
-        downloader.get(from: url) { (result) in
+    func fetch(from url: String, completion: @escaping (Result<T,Error>)->()) {
+        downloader.fetch(from: url) { (result) in
             switch result {
             case .success(let resultData):
                 do {

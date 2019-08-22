@@ -25,8 +25,8 @@ class PhotoDetailViewModel {
     }
     
     //TODO: Add functionality to display error
-    func getImage() {
-        PhotoDataCoordinator().getData(from: photo.url) { [weak self] (result) in
+    func fetchImage() {
+        PhotoDataCoordinator().fetchData(from: photo.url) { [weak self] (result) in
             switch result {
             case .success(let image): self?.delegate?.received?(image: image)
             case .failure(let error): print(error)

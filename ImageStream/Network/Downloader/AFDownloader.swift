@@ -12,7 +12,7 @@ import Alamofire
 /// Gets Data from a URL using Alamofire.
 class AFDownloader: NetworkDownloader {
     
-    func get(from url: String, completion: @escaping (Result<Data, Error>)->()) {
+    func fetch(from url: String, completion: @escaping (Result<Data, Error>)->()) {
         AF.request(url).responseData { (response) in
             if let value = response.value {
                 completion(.success(value))

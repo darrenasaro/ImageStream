@@ -15,7 +15,7 @@ protocol PhotoSearcher {
     /// The page which contains a specified index.
     func page(for index: Int) -> Int
     /// Attempts to retrieve all the photo models on a specified page.
-    func getPhotos(for page: Int, completion: @escaping (Result<[Photo],Error>)->())
+    func fetchPhotos(for page: Int, completion: @escaping (Result<[Photo],Error>)->())
 }
 
 /// Searches for photo models by page from a URL
@@ -28,15 +28,15 @@ class PhotoSearchCoordinator<T: PhotoSearchResult>: PhotoSearcher {
         self.urlBuilder = urlBuilder
     }
 
-    func getPhotos(for page: Int, completion: @escaping (Result<[Photo],Error>)->()) {
+    func fetchPhotos(for page: Int, completion: @escaping (Result<[Photo],Error>)->()) {
         urlBuilder.page = page
-        getPhotos(with: completion)
+        fetchPhotos(with: completion)
     }
     
     //TODO: inject service?
     /// Helper method that attempts to retrieve photo models using the urlBuilder property
-    private func getPhotos(with completion: @escaping (Result<[Photo],Error>)->()) {
-        PhotoSearchService<T>().get(from: urlBuilder.url) { (result) in
+    private func fetchPhotos(with completion: @escaping (Result<[Photo],Error>)->()) {
+        PhotoSearchService<T>().fetch(from: urlBuilder.url) { (result) in
             switch result {
             case .success(let searchResult):
                 if self.totalPhotoCount == nil { self.totalPhotoCount = searchResult.totalCount }

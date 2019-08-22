@@ -30,15 +30,15 @@ class PhotoCollectionViewModel {
     }
     
     /// Gets the page of photos for the index if it hasn't already been retrieved
-    func getPhoto(at index: Int) {
-        let pageToGet = searcher.page(for: index)
-        guard pageToGet > lastFetchedPage else { return }
-        searchForPhotos(on: pageToGet)
+    func fetchPhoto(at index: Int) {
+        let pageToFetch = searcher.page(for: index)
+        guard pageToFetch > lastFetchedPage else { return }
+        searchForPhotos(on: pageToFetch)
         lastFetchedPage += 1
     }
     
     private func searchForPhotos(on page: Int) {
-        searcher.getPhotos(for: page) { [unowned self] (result) in
+        searcher.fetchPhotos(for: page) { [unowned self] (result) in
             switch result {
             case .success(let photos):
                 let startIndex = self.photoModels.count

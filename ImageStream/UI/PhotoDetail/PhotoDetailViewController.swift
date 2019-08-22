@@ -88,7 +88,7 @@ class PhotoDetailViewController: UIViewController {
     
     private func setupViewModel() {
         viewModel.delegate = self
-        viewModel.getImage()
+        viewModel.fetchImage()
     }
 }
 

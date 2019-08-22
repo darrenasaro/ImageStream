@@ -15,5 +15,5 @@ enum Result<T, U: Error> {
 
 /// Abstraction for a type that gets Data from a URL.
 protocol NetworkDownloader {
-    func get(from url: String, completion: @escaping (Result<Data, Error>)->())
+    func fetch(from url: String, completion: @escaping (Result<Data, Error>)->())
 }
