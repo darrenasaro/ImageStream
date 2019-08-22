@@ -9,7 +9,7 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, InitialRoute {
+class AppDelegate: UIResponder, UIApplicationDelegate, InitialRouter {
 
     var window: UIWindow?
 

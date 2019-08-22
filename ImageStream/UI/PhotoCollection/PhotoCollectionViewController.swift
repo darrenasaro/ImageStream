@@ -9,7 +9,7 @@
 import UIKit
 
 /// Displays a collection of photos
-class PhotoCollectionViewController: UIViewController, PhotoDetailRoute {
+class PhotoCollectionViewController: UIViewController, PhotoDetailRouter {
     
     private lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = SquareCollectionViewLayout(itemsPerRow: 2)

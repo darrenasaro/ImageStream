@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 /// Abstraction for a type that creates the initial UIViewController for the app.
-protocol InitialRoute {
+protocol InitialRouter {
     func getInitialViewController() -> UIViewController
 }
 
-extension InitialRoute {
+extension InitialRouter {
     func getInitialViewController() -> UIViewController {
         let urlBuilder = FlickrPhotoSearchURLBuilder(searchString: "minimal", perPage: 25)
         let photoSearcher = PhotoSearchCoordinator<FlickrPhotoSearchResult>(urlBuilder: urlBuilder)

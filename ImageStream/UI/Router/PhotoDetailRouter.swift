@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 /// Abstraction for a type that can route to a view controller that displays a photo.
-protocol PhotoDetailRoute {
+protocol PhotoDetailRouter {
     func showPhotoDetail(_ photo: Photo)
 }
 
-extension PhotoDetailRoute where Self: UIViewController {
+extension PhotoDetailRouter where Self: UIViewController {
     func showPhotoDetail(_ photo: Photo) {
         let photoDetailViewModel = PhotoDetailViewModel(photo: photo)
         let photoDetailViewController = PhotoDetailViewController(viewModel: photoDetailViewModel)
