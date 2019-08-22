@@ -9,19 +9,16 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, InitialRoute {
 
     var window: UIWindow?
-    var router: MainRouter?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         ThemeManager.shared.apply(theme: Theme())
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        router = MainRouter()
-        router?.createInitialViewController()
-        window!.rootViewController = router?.initialViewController
+        window!.rootViewController = getInitialViewController()
         window!.makeKeyAndVisible()
         
         return true

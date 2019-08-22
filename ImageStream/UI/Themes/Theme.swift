@@ -27,22 +27,14 @@ struct FontTheme {
     let normalFontName = "Avenir-Heavy"
     let boldFontName = "Avenir-Black"
     
-    let smallFontSize: CGFloat = 12
-    let largeFontSize: CGFloat = 14
+    let smallFontSize: CGFloat = 14
+    let largeFontSize: CGFloat = 16
     
     let kerning: CGFloat = 3
     
-    var largeBold: UIFont {
-        return UIFont(name: boldFontName, size: largeFontSize)!
-    }
-    
-    var smallBold: UIFont {
-        return UIFont(name: boldFontName, size: smallFontSize)!
-    }
-    
-    var smallLght: UIFont {
-        return UIFont(name: lightFontName, size: smallFontSize)!
-    }
+    var largeBold: UIFont { return UIFont(name: boldFontName, size: largeFontSize)! }
+    var smallBold: UIFont { return UIFont(name: boldFontName, size: smallFontSize)! }
+    var smallLght: UIFont { return UIFont(name: lightFontName, size: smallFontSize)! }
 }
 
 struct DimensionTheme {
