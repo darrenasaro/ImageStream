@@ -12,14 +12,8 @@ import UIKit
 class PhotoCollectionViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
-        let itemsPerRow: CGFloat = 2
-        let itemSpacing: CGFloat = ThemeManager.dimension.margins
-        let itemDimension = (view.frame.width-(itemsPerRow+1)*itemSpacing)/itemsPerRow
-        
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: itemSpacing, left: itemSpacing, bottom: itemSpacing, right: itemSpacing)
-        layout.itemSize = CGSize(width: itemDimension, height: itemDimension)
-        
+        let layout: UICollectionViewFlowLayout = SquareCollectionViewLayout(itemsPerRow: 2)
+
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = ThemeManager.color.light
@@ -45,9 +39,9 @@ class PhotoCollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupViewModel()
+        
         setupCollectionView()
+        setupViewModel()
     }
     
     private func setupViewModel() {
@@ -61,7 +55,7 @@ class PhotoCollectionViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
 }

@@ -65,12 +65,12 @@ class SwipeViewController: UIViewController {
         viewController.view.frame.origin.y = scrollView.frame.height
         viewController.view.layoutIfNeeded()
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         scrollUp()
     }
-    
+
     func scrollUp() {
         scrollView.contentOffset = CGPoint.zero
         UIView.animate(withDuration: 0.3) {
