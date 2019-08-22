@@ -30,6 +30,7 @@
 		1F383011230E560500669A58 /* PhotoDetailRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F383010230E560500669A58 /* PhotoDetailRoute.swift */; };
 		1F383013230F1D9900669A58 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F383012230F1D9900669A58 /* NetworkServiceTests.swift */; };
 		1F383015230F290500669A58 /* MapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F383014230F290500669A58 /* MapperTests.swift */; };
+		1F383019230F300500669A58 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F383018230F300500669A58 /* Result.swift */; };
 		1F78EE322305E28D00E40861 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE312305E28D00E40861 /* AppDelegate.swift */; };
 		1F78EE342305E28D00E40861 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78EE332305E28D00E40861 /* PhotoCollectionViewController.swift */; };
 		1F78EE392305E29500E40861 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F78EE382305E29500E40861 /* Assets.xcassets */; };
@@ -95,6 +96,7 @@
 		1F383010230E560500669A58 /* PhotoDetailRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailRoute.swift; sourceTree = "<group>"; };
 		1F383012230F1D9900669A58 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		1F383014230F290500669A58 /* MapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapperTests.swift; sourceTree = "<group>"; };
+		1F383018230F300500669A58 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		1F78EE2E2305E28D00E40861 /* ImageStream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageStream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F78EE312305E28D00E40861 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F78EE332305E28D00E40861 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 		1F78EE652306107D00E40861 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				1F383018230F300500669A58 /* Result.swift */,
 				1F383006230DC92B00669A58 /* URLBuilder */,
 				1F383003230DBF4700669A58 /* Downloader */,
 				1F382FFE230DBE1000669A58 /* Service */,
@@ -616,6 +619,7 @@
 				1F38300C230DCFE300669A58 /* APIURLBuilder.swift in Sources */,
 				1F78EE342305E28D00E40861 /* PhotoCollectionViewController.swift in Sources */,
 				1F382FE22308D25D00669A58 /* PhotoCellViewModel.swift in Sources */,
+				1F383019230F300500669A58 /* Result.swift in Sources */,
 				1F382FE9230B93A600669A58 /* PhotoDetailViewController.swift in Sources */,
 				1F78EE6E23065F6000E40861 /* Mapper.swift in Sources */,
 				1F382FEB230B97BD00669A58 /* PhotoDetailViewModel.swift in Sources */,

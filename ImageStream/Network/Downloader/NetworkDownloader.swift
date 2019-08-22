@@ -8,11 +8,6 @@
 
 import Foundation
 
-enum Result<T, U: Error> {
-    case success(_ result: T)
-    case failure(_ error: U)
-}
-
 /// Abstraction for a type that gets Data from a URL.
 protocol NetworkDownloader {
     func fetch(from url: String, completion: @escaping (Result<Data, Error>)->())
