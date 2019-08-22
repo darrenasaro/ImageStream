@@ -175,9 +175,7 @@
 				1F382FE8230B93A600669A58 /* PhotoDetailViewController.swift */,
 				1F382FEA230B97BD00669A58 /* PhotoDetailViewModel.swift */,
 				1F382FF2230CAB1E00669A58 /* SwipeViewController.swift */,
-				1F382FF4230CADA600669A58 /* UIViewController+Add+Remove.swift */,
 				1F382FEE230C680300669A58 /* Label.swift */,
-				1F382FF0230C687200669A58 /* UILabel+Kern.swift */,
 			);
 			path = PhotoDetail;
 			sourceTree = "<group>";
@@ -230,6 +228,17 @@
 			path = URLBuilder;
 			sourceTree = "<group>";
 		};
+		1F38300F230E4BE400669A58 /* Exensions */ = {
+			isa = PBXGroup;
+			children = (
+				1F382FF0230C687200669A58 /* UILabel+Kern.swift */,
+				1F382FF4230CADA600669A58 /* UIViewController+Add+Remove.swift */,
+				1F78EE77230862DA00E40861 /* UIColor+Convenience.swift */,
+				1F382FEC230C622F00669A58 /* UIView+ApplyShadow.swift */,
+			);
+			path = Exensions;
+			sourceTree = "<group>";
+		};
 		1F78EE252305E28D00E40861 = {
 			isa = PBXGroup;
 			children = (
@@ -260,6 +269,7 @@
 				1F78EE6623061CC400E40861 /* Models */,
 				1F78EE6F23072FD900E40861 /* Coordinator */,
 				1F78EE652306107D00E40861 /* Network */,
+				1F38300F230E4BE400669A58 /* Exensions */,
 				1F78EE382305E29500E40861 /* Assets.xcassets */,
 				1F78EE3A2305E29500E40861 /* LaunchScreen.storyboard */,
 				1F78EE3D2305E29500E40861 /* Info.plist */,
@@ -330,8 +340,6 @@
 			children = (
 				1F78EE752308563300E40861 /* Theme.swift */,
 				1F78EE792308638A00E40861 /* ThemeManager.swift */,
-				1F382FEC230C622F00669A58 /* UIView+ApplyShadow.swift */,
-				1F78EE77230862DA00E40861 /* UIColor+Convenience.swift */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
