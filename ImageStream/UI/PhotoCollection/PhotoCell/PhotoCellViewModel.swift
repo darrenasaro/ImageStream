@@ -25,6 +25,7 @@ class PhotoCellViewModel {
     }
     
     //TODO: Add functionality to display error
+    //TODO: inject PhotoDataCoordinator
     /// Attempts to retrieve an image using the photo properties' url, calling the delegate if successful.
     func fetchImage() {
         PhotoDataCoordinator().fetchData(from: photo.url) { [weak self] (result) in
