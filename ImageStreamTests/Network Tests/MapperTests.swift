@@ -10,24 +10,27 @@ import XCTest
 @testable import ImageStream
 
 class MapperTests: XCTestCase {
-    struct TestDecodable: Decodable {
+    struct DecodableStub: Decodable {
         let key: String
     }
     
-    func test_JSONMapper_succeeds() {
-        let mapper = JSONMapper<TestDecodable>()
+    func test_JSONMapper_Map_Succeeds() {
+        let mapper = JSONMapper<DecodableStub>()
         let data = """
                 {"key": "value"}
             """.data(using: .utf8)!
-        guard let model = try? mapper.map(data: data) as? TestDecodable else { return XCTFail() }
+        
+        guard let model = try? mapper.map(data: data) as? DecodableStub else { return XCTFail() }
+        
         guard model.key == "value" else { return XCTFail() }
     }
     
-    func test_JSONMapper_fails() {
-        let mapper = JSONMapper<TestDecodable>()
+    func test_JSONMapper_Map_Fails() {
+        let mapper = JSONMapper<DecodableStub>()
         let data = """
                 {"wrongKey": "value"}
             """.data(using: .utf8)!
+        
         XCTAssertThrowsError(try mapper.map(data: data))
     }
 }
