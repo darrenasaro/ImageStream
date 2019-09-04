@@ -9,7 +9,7 @@
 import UIKit
 
 /// Displays a collection of photos
-class PhotoCollectionViewController: UIViewController, PhotoDetailRouter {
+class PhotoCollectionViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = SquareCollectionViewLayout(itemsPerRow: 2)
@@ -25,6 +25,7 @@ class PhotoCollectionViewController: UIViewController, PhotoDetailRouter {
         return collectionView
     }()
     
+    var selectionCallback: ((Photo) -> Void)?
     var viewModel: PhotoCollectionViewModel
 
     init(viewModel: PhotoCollectionViewModel) {
@@ -87,7 +88,8 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
     /// Show detailed view of photo for selected index.
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard viewModel.photoModels.indices.contains(indexPath.row) else { return }
-        showPhotoDetail(viewModel.photoModels[indexPath.row])
+        //showPhotoDetail(viewModel.photoModels[indexPath.row])
+        selectionCallback?(viewModel.photoModels[indexPath.row])
     }
     /// Request more photos from viewModel for the upcoming indeces if necessary.
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {

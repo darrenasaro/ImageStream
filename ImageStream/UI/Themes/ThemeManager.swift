@@ -12,7 +12,7 @@ final class ThemeManager {
     
     static let shared = ThemeManager()
     
-    var currentTheme: Theme = Theme()
+    private(set) var currentTheme: Theme = Theme()
     
     static var color: ColorTheme { return ThemeManager.shared.currentTheme.colorTheme }
     static var font: FontTheme { return ThemeManager.shared.currentTheme.fontTheme }
@@ -51,3 +51,5 @@ final class ThemeManager {
         UIView.appearance().layer.shadowRadius = shadowTheme.radius
     }
 }
+
+
