@@ -13,7 +13,7 @@ class MainRouter: Router {
     private var photoCollectionViewController: PhotoCollectionViewController?
     
     func start() -> UIViewController {
-        let urlBuilder = FlickrPhotoSearchURLBuilder(searchString: "minimal", perPage: 25)
+        let urlBuilder = FlickrPhotoSearchURLBuilder(searchString: "minimal")
         let photoSearcher = PhotoSearchCoordinator<FlickrPhotoSearchResult>(urlBuilder: urlBuilder)
         let viewModel = PhotoCollectionViewModel(searcher: photoSearcher)
         photoCollectionViewController = PhotoCollectionViewController(viewModel: viewModel)

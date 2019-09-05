@@ -11,7 +11,7 @@ import Foundation
 /// Creates a URL specific to the Flickr API's photosSearch method.
 class FlickrPhotoSearchURLBuilder: FlickrURLBuilder, PaginatedURLBuilder {
     var page: Int = 0
-    let perPage: Int
+    var perPage: Int = 25
     
     /// Constructs url by first incorporating page requirements into the queryArguments
     override var url: String {
@@ -20,8 +20,7 @@ class FlickrPhotoSearchURLBuilder: FlickrURLBuilder, PaginatedURLBuilder {
         return super.url
     }
     
-    init(searchString: String, perPage: Int) {
-        self.perPage = perPage
+    init(searchString: String) {
         let photoSearchMethod = Method.photosSearch
         let photoSearchQueryArgs = ["text": searchString,
                                     "sort": "interestingness-desc",

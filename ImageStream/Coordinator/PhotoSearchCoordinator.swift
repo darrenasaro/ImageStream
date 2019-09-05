@@ -27,8 +27,11 @@ class PhotoSearchCoordinator<T: PhotoSearchResult>: PhotoSearcher {
     private var urlBuilder: PaginatedURLBuilder
     var totalPhotoCount: Int?
     
-    init(urlBuilder: PaginatedURLBuilder) {
+    private var service: PhotoSearchService<T>
+    
+    init(urlBuilder: PaginatedURLBuilder, service: PhotoSearchService<T> = PhotoSearchService<T>(mapper: JSONMapper<T>())) {
         self.urlBuilder = urlBuilder
+        self.service = service
     }
 
     func fetchPhotos(for page: Int, completion: @escaping PhotoFetchCallback) {
@@ -39,7 +42,7 @@ class PhotoSearchCoordinator<T: PhotoSearchResult>: PhotoSearcher {
     //TODO: inject service?
     /// Helper method that attempts to retrieve photo models using the urlBuilder property
     private func fetchPhotos(with completion: @escaping PhotoFetchCallback) {
-        PhotoSearchService<T>().fetch(from: urlBuilder.url) { (result) in
+        service.fetch(from: urlBuilder.url) { (result) in
             switch result {
             case .success(let searchResult):
                 if self.totalPhotoCount == nil { self.totalPhotoCount = searchResult.totalCount }

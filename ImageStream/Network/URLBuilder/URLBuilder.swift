@@ -18,9 +18,17 @@ protocol PaginatedURLBuilder: URLBuilder {
     /// The page being requested.
     var page: Int { get set }
     /// The amount of items per page requested.
-    var perPage: Int { get }
+    var perPage: Int { get set }
 }
 
-
+//class APIURL: URLBuilder {
+//    var url: String {
+//        return urlBuilder.url
+//    }
+//    private var urlBuilder: URLBuilder
+//    init(urlBuilder: URLBuilder) {
+//        self.urlBuilder = urlBuilder
+//    }
+//}
 
 

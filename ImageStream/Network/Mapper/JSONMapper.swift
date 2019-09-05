@@ -10,7 +10,7 @@ import Foundation
 
 /// A Mapper that maps Data to a Decodable object
 class JSONMapper<T:Decodable>: Mapper {
-    func map(data: Data) throws -> Any {
+    func map(data: Data) throws -> T {
         return try JSONDecoder().decode(T.self, from: data)
     }
 }

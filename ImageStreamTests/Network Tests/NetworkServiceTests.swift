@@ -14,7 +14,7 @@ class NetworkServiceTests: XCTestCase {
     func test_NetworkService_fetchWhenDownloaderSucceedsAndMapperSucceeds_succeeds() {
         let downloader = NetworkDownloaderStub(data: Data())
         let mapper = MapperStub(decodable: DecodableDummy())
-        let networkService = NetworkService<DecodableDummy>(downloader: downloader, mapper: mapper)
+        let networkService = NetworkService<MapperStub>(downloader: downloader, mapper: mapper)
         let promise = expectation(description: "NetworkService fetch succeeds")
         
         networkService.fetch(from: "") { (result) in
@@ -30,7 +30,7 @@ class NetworkServiceTests: XCTestCase {
     func test_NetworkService_fetchWhenDownloaderFailsAndMapperSucceeds_fails() {
         let downloader = NetworkDownloaderStub(error: TestError.failure)
         let mapper = MapperStub(decodable: DecodableDummy())
-        let networkService = NetworkService<DecodableDummy>(downloader: downloader, mapper: mapper)
+        let networkService = NetworkService<MapperStub>(downloader: downloader, mapper: mapper)
         let promise = expectation(description: "NetworkService fetch fails")
         
         networkService.fetch(from: "") { (result) in
@@ -46,7 +46,7 @@ class NetworkServiceTests: XCTestCase {
     func test_NetworkService_fetchWhenDownloaderFailsAndMapperFails_fails() {
         let downloader = NetworkDownloaderStub(error: TestError.failure)
         let mapper = MapperStub(error: TestError.failure)
-        let networkService = NetworkService<DecodableDummy>(downloader: downloader, mapper: mapper)
+        let networkService = NetworkService<MapperStub>(downloader: downloader, mapper: mapper)
         let promise = expectation(description: "NetworkService fetch fails")
         
         networkService.fetch(from: "") { (result) in
@@ -62,7 +62,7 @@ class NetworkServiceTests: XCTestCase {
     func test_NetworkService_fetchWhenDownloaderSucceedsAndMapperFails_fails() {
         let downloader = NetworkDownloaderStub(data: Data())
         let mapper = MapperStub(error: TestError.failure)
-        let networkService = NetworkService<DecodableDummy>(downloader: downloader, mapper: mapper)
+        let networkService = NetworkService<MapperStub>(downloader: downloader, mapper: mapper)
         let promise = expectation(description: "NetworkService fetch fails")
         
         networkService.fetch(from: "") { (result) in
@@ -111,7 +111,7 @@ extension NetworkServiceTests {
             self.decodable = decodable
         }
         
-        func map(data: Data) throws -> Any {
+        func map(data: Data) throws -> Decodable {
             guard let decodable = decodable else { throw error! }
             return decodable
         }

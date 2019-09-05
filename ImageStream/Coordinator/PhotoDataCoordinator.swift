@@ -13,7 +13,7 @@ import UIKit
 class PhotoDataCoordinator {
     //TODO: cache image data
     func fetchData(from url: String, completion: @escaping (Result<UIImage, Error>)->()) {
-        ImageService().fetch(from: url) { (result) in
+        ImageDownloadService(mapper: ImageMapper()).fetch(from: url) { (result) in
             completion(result)
         }
     }
