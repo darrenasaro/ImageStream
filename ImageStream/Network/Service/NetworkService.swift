@@ -16,7 +16,6 @@ protocol NetworkService {
     func fetch(from url: String, completion: @escaping (Result<U.OutputType, Error>)->())
 }
 
-
 extension NetworkService {
 
     func fetch(from url: String, completion: @escaping (Result<U.OutputType, Error>)->()) {

@@ -20,7 +20,7 @@ class MapperTests: XCTestCase {
                 {"key": "value"}
             """.data(using: .utf8)!
         
-        guard let model = try? mapper.map(data: data) as? DecodableStub else { return XCTFail() }
+        guard let model = try? mapper.map(data: data) else { return XCTFail() }
         
         guard model.key == "value" else { return XCTFail() }
     }

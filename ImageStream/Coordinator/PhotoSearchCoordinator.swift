@@ -30,7 +30,7 @@ class PhotoSearchCoordinator<T: PhotoSearchResult>: PhotoSearcher {
     var totalPhotoCount: Int?
     
     init(urlBuilder: PaginatedURLBuilder,
-         service: PhotoSearchService<T> = PhotoSearchService<T>(mapper: JSONMapper<T>())) {
+         service: PhotoSearchService<T> = PhotoSearchService(mapper: JSONMapper<T>())) {
         
         self.urlBuilder = urlBuilder
         self.service = service
