@@ -21,14 +21,4 @@ protocol PaginatedURLBuilder: URLBuilder {
     var perPage: Int { get set }
 }
 
-//class APIURL: URLBuilder {
-//    var url: String {
-//        return urlBuilder.url
-//    }
-//    private var urlBuilder: URLBuilder
-//    init(urlBuilder: URLBuilder) {
-//        self.urlBuilder = urlBuilder
-//    }
-//}
-
 

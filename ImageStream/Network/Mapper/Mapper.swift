@@ -11,6 +11,6 @@ import UIKit
 
 /// Abstraction for a type that can map Data into a different format
 protocol Mapper {
-    associatedtype T
-    func map(data: Data) throws -> T
+    associatedtype OutputType
+    func map(data: Data) throws -> OutputType
 }

@@ -9,80 +9,72 @@
 import XCTest
 @testable import ImageStream
 
-class NetworkServiceTests: XCTestCase {
-    
-    func test_NetworkService_fetchWhenDownloaderSucceedsAndMapperSucceeds_succeeds() {
-        let downloader = NetworkDownloaderStub(data: Data())
-        let mapper = MapperStub(decodable: DecodableDummy())
-        let networkService = NetworkService<MapperStub>(downloader: downloader, mapper: mapper)
-        let promise = expectation(description: "NetworkService fetch succeeds")
+class GeneralServiceTests: XCTestCase {
+
+    func test_fetch_whenDownloaderFails_succeeds() {
+        let dummy = MappedDummy()
+        let downloader = NetworkDownloaderStub(error: ErrorFake.failure)
+        let mapper = MapperStub(object: dummy)
+        let sut = GeneralService<MapperStub>(downloader: downloader, mapper: mapper)
         
-        networkService.fetch(from: "") { (result) in
+        let promise = expectation(description: "Data matches")
+        sut.fetch(from: "") { result in
             switch result {
-            case .success(_): promise.fulfill()
-            case .failure(_): XCTFail("NetworkService fetch failed when it should have succeeded")
+            case .success(_): XCTFail()
+            case .failure(let error):
+                guard case ErrorFake.failure = error else { return XCTFail() }
+                promise.fulfill()
             }
         }
         
-        self.wait(for: [promise], timeout: 1.0)
+        wait(for: [promise], timeout: 1.0)
     }
     
-    func test_NetworkService_fetchWhenDownloaderFailsAndMapperSucceeds_fails() {
-        let downloader = NetworkDownloaderStub(error: TestError.failure)
-        let mapper = MapperStub(decodable: DecodableDummy())
-        let networkService = NetworkService<MapperStub>(downloader: downloader, mapper: mapper)
-        let promise = expectation(description: "NetworkService fetch fails")
+    func test_fetch_whenDownloaderSucceedsMapperSucceeds_fails() {
+        let data = Data()
+        let dummy = MappedDummy()
+        let downloader = NetworkDownloaderStub(data: data)
+        let mapper = MapperStub(object: dummy)
+        let sut = GeneralService<MapperStub>(downloader: downloader, mapper: mapper)
         
-        networkService.fetch(from: "") { (result) in
+        let promise = expectation(description: "Data matches")
+        sut.fetch(from: "") { result in
             switch result {
-            case .success(_): XCTFail("NetworkService fetch succeeded when it should have failed")
-            case .failure(_): promise.fulfill()
+            case .success(let model):
+                guard model === dummy else { return XCTFail() }
+                promise.fulfill()
+            case .failure(_): XCTFail()
             }
         }
         
-        self.wait(for: [promise], timeout: 1.0)
+        wait(for: [promise], timeout: 1.0)
     }
     
-    func test_NetworkService_fetchWhenDownloaderFailsAndMapperFails_fails() {
-        let downloader = NetworkDownloaderStub(error: TestError.failure)
-        let mapper = MapperStub(error: TestError.failure)
-        let networkService = NetworkService<MapperStub>(downloader: downloader, mapper: mapper)
-        let promise = expectation(description: "NetworkService fetch fails")
+    func test_fetch_whenDownloaderSucceedsMapperFails_fails() {
+        let data = Data()
+        let downloader = NetworkDownloaderStub(data: data)
+        let mapper = MapperStub(error: ErrorFake.failure)
+        let sut = GeneralService<MapperStub>(downloader: downloader, mapper: mapper)
         
-        networkService.fetch(from: "") { (result) in
+        let promise = expectation(description: "Data matches")
+        sut.fetch(from: "") { result in
             switch result {
-            case .success(_): XCTFail("NetworkService fetch succeeded when it should have failed")
-            case .failure(_): promise.fulfill()
+            case .success(_): XCTFail()
+            case .failure(let error):
+                guard case ErrorFake.failure = error else { return XCTFail() }
+                promise.fulfill()
             }
         }
         
-        self.wait(for: [promise], timeout: 1.0)
-    }
-    
-    func test_NetworkService_fetchWhenDownloaderSucceedsAndMapperFails_fails() {
-        let downloader = NetworkDownloaderStub(data: Data())
-        let mapper = MapperStub(error: TestError.failure)
-        let networkService = NetworkService<MapperStub>(downloader: downloader, mapper: mapper)
-        let promise = expectation(description: "NetworkService fetch fails")
-        
-        networkService.fetch(from: "") { (result) in
-            switch result {
-            case .success(_): XCTFail("NetworkService fetch succeeded when it should have failed")
-            case .failure(_): promise.fulfill()
-            }
-        }
-        
-        self.wait(for: [promise], timeout: 1.0)
+        wait(for: [promise], timeout: 1.0)
     }
 }
 
-extension NetworkServiceTests {
-    enum TestError: Error {
+extension GeneralServiceTests {
+    enum ErrorFake: Error {
         case failure
     }
-    
-    struct DecodableDummy: Decodable { }
-    
+
     class NetworkDownloaderStub: NetworkDownloader {
         var result: Result<Data, Error>
         
@@ -99,21 +91,23 @@ extension NetworkServiceTests {
         }
     }
     
+    class MappedDummy { }
+    
     class MapperStub: Mapper {
         var error: Error?
-        var decodable: Decodable?
+        var object: MappedDummy?
         
         init(error: Error) {
             self.error = error
         }
         
-        init(decodable: Decodable) {
-            self.decodable = decodable
+        init(object: MappedDummy) {
+            self.object = object
         }
         
-        func map(data: Data) throws -> Decodable {
-            guard let decodable = decodable else { throw error! }
-            return decodable
+        func map(data: Data) throws -> MappedDummy {
+            guard let object = object else { throw error! }
+            return object
         }
     }
 }

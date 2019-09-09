@@ -9,35 +9,22 @@
 import Foundation
 import UIKit
 
-protocol NetworkServiceProtocol {
-    associatedtype T
-    func fetch(from url: String, completion: @escaping (Result<T,Error>)->())
+protocol NetworkService {
+    associatedtype U: Mapper
+    var mapper: U { get }
+    var downloader: NetworkDownloader { get }
+    func fetch(from url: String, completion: @escaping (Result<U.OutputType, Error>)->())
 }
-//TODO: Make mapper associated type then use typealiases to simplify everything
-/// Downloads Data from a URL and maps it to a type.
 
-typealias DecodableService<T: Decodable> = NetworkService<JSONMapper<T>>
-typealias PhotoSearchService<T: PhotoSearchResult> = DecodableService<T>
-typealias ImageDownloadService = NetworkService<ImageMapper>
 
-class NetworkService<T: Mapper>: NetworkServiceProtocol {
-    
-    private let downloader: NetworkDownloader
-    private let mapper: T
-    
-    init(downloader: NetworkDownloader = AFDownloader(),
-         mapper: T) {
-        
-        self.downloader = downloader
-        self.mapper = mapper
-    }
-    
-    func fetch(from url: String, completion: @escaping (Result<T.T,Error>)->()) {
+extension NetworkService {
+
+    func fetch(from url: String, completion: @escaping (Result<U.OutputType, Error>)->()) {
         downloader.fetch(from: url) { (result) in
             switch result {
             case .success(let resultData):
                 do {
-                    let model: T.T = try self.mapper.map(data: resultData)
+                    let model: U.OutputType = try self.mapper.map(data: resultData)
                     completion(.success(model))
                 } catch let error {
                     completion(.failure(error))
@@ -46,5 +33,20 @@ class NetworkService<T: Mapper>: NetworkServiceProtocol {
                 completion(.failure(error))
             }
         }
+    }
+}
+
+typealias DecodableService<T: Decodable> = GeneralService<JSONMapper<T>>
+typealias PhotoSearchService<T: PhotoSearchResult> = DecodableService<T>
+typealias ImageService = GeneralService<ImageMapper>
+
+struct GeneralService<T: Mapper>: NetworkService {
+
+    let downloader: NetworkDownloader
+    let mapper: T
+
+    init(downloader: NetworkDownloader = AFDownloader(), mapper: T) {
+        self.downloader = downloader
+        self.mapper = mapper
     }
 }
