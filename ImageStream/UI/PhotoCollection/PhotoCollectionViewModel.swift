@@ -22,19 +22,33 @@ class PhotoCollectionViewModel {
         return searcher.totalPhotoCount ?? 0
     }
 
-    var photoModels = [Photo]()
+    private(set) var photoModels = [Photo]()
     private var lastFetchedPage: Int = 0
     
     init(searcher: PhotoSearcher) {
         self.searcher = searcher
     }
     
+    //TODO: requests on a serial queue
     /// Gets the page of photos for the index if it hasn't already been retrieved
-    func fetchPhoto(at index: Int) {
-        let pageToFetch = searcher.page(for: index)
-        guard pageToFetch > lastFetchedPage else { return }
-        searchForPhotos(on: pageToFetch)
-        lastFetchedPage += 1
+    func fetchPhotos(for indices: [Int]) {
+        for page in pagesToFetchFrom(indices) {
+            searchForPhotos(on: page)
+            lastFetchedPage = page
+        }
+    }
+    
+    private func pagesToFetchFrom(_ indices: [Int]) -> [Int] {
+        guard indices.count > 0 else { return [] }
+        let lastPage = searcher.page(for: indices.last!)
+        guard lastPage > lastFetchedPage else { return [] }
+        
+        var pages = [Int]()
+        for index in lastFetchedPage...lastPage {
+            pages.append(index)
+        }
+        
+        return pages
     }
     
     private func searchForPhotos(on page: Int) {

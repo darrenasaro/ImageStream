@@ -9,7 +9,7 @@
 import UIKit
 
 /// Displays a collection of photos
-class PhotoCollectionViewController: UIViewController, PhotoDetailRouter {
+class PhotoCollectionViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = SquareCollectionViewLayout(itemsPerRow: 2)
@@ -25,6 +25,7 @@ class PhotoCollectionViewController: UIViewController, PhotoDetailRouter {
         return collectionView
     }()
     
+    var selectionCallback: ((Photo) -> Void)?
     var viewModel: PhotoCollectionViewModel
 
     init(viewModel: PhotoCollectionViewModel) {
@@ -45,7 +46,7 @@ class PhotoCollectionViewController: UIViewController, PhotoDetailRouter {
     
     private func setupViewModel() {
         viewModel.delegate = self
-        viewModel.fetchPhoto(at: 0)
+        viewModel.fetchPhotos(for: [0])
     }
     
     private func setupCollectionView() {
@@ -65,8 +66,11 @@ extension PhotoCollectionViewController: PhotoCollectionViewModelDelegate {
         if viewModel.totalPhotoCount > collectionView.numberOfItems(inSection: 0) {
             return collectionView.reloadData()
         }
-        
-        let indexPathsToReload = Array(Range(indeces)!).map({ IndexPath(row: $0, section: 0) })
+        reloadVisibleIndexPaths(in: Range(indeces)!)
+    }
+    //TODO: Make this a UICollectionView extension?
+    private func reloadVisibleIndexPaths(in range: Range<Int>) {
+        let indexPathsToReload = Array(range).map({ IndexPath(row: $0, section: 0) })
         let visibleIndexPathsToReload = Set(collectionView.indexPathsForVisibleItems).intersection(Set(indexPathsToReload))
         collectionView.reloadItems(at: Array(visibleIndexPathsToReload))
     }
@@ -87,14 +91,11 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
     /// Show detailed view of photo for selected index.
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard viewModel.photoModels.indices.contains(indexPath.row) else { return }
-        showPhotoDetail(viewModel.photoModels[indexPath.row])
+        selectionCallback?(viewModel.photoModels[indexPath.row])
     }
-    /// Request more photos from viewModel for the upcoming indeces if necessary.
+    /// Request more photos from viewModel for the upcoming indices.
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let nextIndex = indexPaths[0].row
-        if nextIndex > viewModel.photoModels.count {
-            viewModel.fetchPhoto(at: nextIndex)
-        }
+        viewModel.fetchPhotos(for: indexPaths.map { $0.row })
     }
 }
 

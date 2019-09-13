@@ -31,8 +31,10 @@ class SwipeViewController: UIViewController {
     
     init(viewController: UIViewController) {
         self.viewController = viewController
+        
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .clear
+        
+        setupSelf()
         setupScrollView()
         setupViewController()
     }
@@ -43,6 +45,11 @@ class SwipeViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupSelf() {
+        modalPresentationStyle = .overCurrentContext
+        view.backgroundColor = .clear
     }
     
     private func setupScrollView() {

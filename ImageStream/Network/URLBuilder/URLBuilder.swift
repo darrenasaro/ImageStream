@@ -18,9 +18,7 @@ protocol PaginatedURLBuilder: URLBuilder {
     /// The page being requested.
     var page: Int { get set }
     /// The amount of items per page requested.
-    var perPage: Int { get }
+    var perPage: Int { get set }
 }
-
-
 
 

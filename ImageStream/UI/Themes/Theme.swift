@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//TODO: Initializers
 struct Theme {
     let colorTheme: ColorTheme = ColorTheme()
     let fontTheme: FontTheme = FontTheme()

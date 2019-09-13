@@ -9,136 +9,105 @@
 import XCTest
 @testable import ImageStream
 
-class NetworkServiceTests: XCTestCase {
+class GeneralServiceTests: XCTestCase {
 
-    func test_downloaderSucceeds() {
-        let downloader = MockNetworkDownloader(succeeds: true)
-        let promise = expectation(description: "Downloader fetch success")
-        downloader.fetch(from: "") { (result) in
+    func test_fetch_whenDownloaderFails_succeeds() {
+        let dummy = MappedDummy()
+        let downloader = NetworkDownloaderStub(error: ErrorFake.failure)
+        let mapper = MapperStub(object: dummy)
+        let sut = GeneralService<MapperStub>(downloader: downloader, mapper: mapper)
+        
+        let promise = expectation(description: "Data matches")
+        sut.fetch(from: "") { result in
             switch result {
-            case .success(_): promise.fulfill()
+            case .success(_): XCTFail()
+            case .failure(let error):
+                guard case ErrorFake.failure = error else { return XCTFail() }
+                promise.fulfill()
+            }
+        }
+        
+        wait(for: [promise], timeout: 1.0)
+    }
+    
+    func test_fetch_whenDownloaderSucceedsMapperSucceeds_fails() {
+        let data = Data()
+        let dummy = MappedDummy()
+        let downloader = NetworkDownloaderStub(data: data)
+        let mapper = MapperStub(object: dummy)
+        let sut = GeneralService<MapperStub>(downloader: downloader, mapper: mapper)
+        
+        let promise = expectation(description: "Data matches")
+        sut.fetch(from: "") { result in
+            switch result {
+            case .success(let model):
+                guard model === dummy else { return XCTFail() }
+                promise.fulfill()
             case .failure(_): XCTFail()
             }
         }
-        self.wait(for: [promise], timeout: 1.0)
+        
+        wait(for: [promise], timeout: 1.0)
     }
     
-    func test_downloaderFails() {
-        let downloader = MockNetworkDownloader(succeeds: false)
-        let promise = expectation(description: "Downloader fetch fails")
-        downloader.fetch(from: "") { (result) in
+    func test_fetch_whenDownloaderSucceedsMapperFails_fails() {
+        let data = Data()
+        let downloader = NetworkDownloaderStub(data: data)
+        let mapper = MapperStub(error: ErrorFake.failure)
+        let sut = GeneralService<MapperStub>(downloader: downloader, mapper: mapper)
+        
+        let promise = expectation(description: "Data matches")
+        sut.fetch(from: "") { result in
             switch result {
             case .success(_): XCTFail()
-            case .failure(_): promise.fulfill()
+            case .failure(let error):
+                guard case ErrorFake.failure = error else { return XCTFail() }
+                promise.fulfill()
             }
         }
-        self.wait(for: [promise], timeout: 1.0)
-    }
-    
-    func test_mapperSucceeds() {
-        let mapper = MockMapper(succeeds: true)
-        XCTAssertNoThrow(try mapper.map(data: Data()))
-    }
-    
-    func test_mapperFails() {
-        let mapper = MockMapper(succeeds: false)
-        XCTAssertThrowsError(try mapper.map(data: Data()))
-    }
-    
-    func test_networkServiceSucceeds_when_downloaderSucceeds_mapperSucceeds() {
-        let downloader = MockNetworkDownloader(succeeds: true)
-        let mapper = MockMapper(succeeds: true)
-        let networkService = NetworkService<MockDecodable>(downloader: downloader, mapper: mapper)
         
-        let promise = expectation(description: "NetworkService fetch succeeds")
-        networkService.fetch(from: "") { (result) in
-            switch result {
-            case .success(_): promise.fulfill()
-            case .failure(_): XCTFail("NetworkService fetch failed when it should have succeeded")
-            }
-        }
-        self.wait(for: [promise], timeout: 1.0)
-    }
-    
-    func test_networkServiceFails_when_downloaderFails_mapperSucceeds() {
-        let downloader = MockNetworkDownloader(succeeds: false)
-        let mapper = MockMapper(succeeds: true)
-        let networkService = NetworkService<MockDecodable>(downloader: downloader, mapper: mapper)
-        
-        let promise = expectation(description: "NetworkService fetch fails")
-        networkService.fetch(from: "") { (result) in
-            switch result {
-            case .success(_): XCTFail("NetworkService fetch succeeded when it should have failed")
-            case .failure(_): promise.fulfill()
-            }
-        }
-        self.wait(for: [promise], timeout: 1.0)
-    }
-    
-    func test_networkServiceFails_when_downloaderFails_mapperFails() {
-        let downloader = MockNetworkDownloader(succeeds: false)
-        let mapper = MockMapper(succeeds: false)
-        let networkService = NetworkService<MockDecodable>(downloader: downloader, mapper: mapper)
-        
-        let promise = expectation(description: "NetworkService fetch fails")
-        networkService.fetch(from: "") { (result) in
-            switch result {
-            case .success(_): XCTFail("NetworkService fetch succeeded when it should have failed")
-            case .failure(_): promise.fulfill()
-            }
-        }
-        self.wait(for: [promise], timeout: 1.0)
-    }
-    
-    func test_networkServiceFails_when_downloaderSucceds_mapperFails() {
-        let downloader = MockNetworkDownloader(succeeds: true)
-        let mapper = MockMapper(succeeds: false)
-        let networkService = NetworkService<MockDecodable>(downloader: downloader, mapper: mapper)
-        
-        let promise = expectation(description: "NetworkService fetch fails")
-        networkService.fetch(from: "") { (result) in
-            switch result {
-            case .success(_): XCTFail("NetworkService fetch succeeded when it should have failed")
-            case .failure(_): promise.fulfill()
-            }
-        }
-        self.wait(for: [promise], timeout: 1.0)
+        wait(for: [promise], timeout: 1.0)
     }
 }
 
-extension NetworkServiceTests {
-    enum MockError: Error {
+extension GeneralServiceTests {
+    enum ErrorFake: Error {
         case failure
     }
-    
-    struct MockDecodable: Decodable { }
-    
-    class MockNetworkDownloader: NetworkDownloader {
+
+    class NetworkDownloaderStub: NetworkDownloader {
+        var result: Result<Data, Error>
         
-        let succeeds: Bool
+        init(error: Error) {
+            result = .failure(error)
+        }
         
-        init(succeeds: Bool) {
-            self.succeeds = succeeds
+        init(data: Data) {
+            result = .success(data)
         }
         
         func fetch(from url: String, completion: @escaping (Result<Data, Error>) -> ()) {
-            return succeeds ? completion(.success(Data())) : completion(.failure(MockError.failure))
+            return completion(result)
         }
     }
     
-    class MockMapper: Mapper {
-        var succeeds: Bool
+    class MappedDummy { }
+    
+    class MapperStub: Mapper {
+        var error: Error?
+        var object: MappedDummy?
         
-        init(succeeds: Bool) {
-            self.succeeds = succeeds
+        init(error: Error) {
+            self.error = error
         }
         
-        func map(data: Data) throws -> Any {
-            if succeeds {
-                return MockDecodable()
-            } else {
-                throw MockError.failure
-            }
+        init(object: MappedDummy) {
+            self.object = object
+        }
+        
+        func map(data: Data) throws -> MappedDummy {
+            guard let object = object else { throw error! }
+            return object
         }
     }
 }

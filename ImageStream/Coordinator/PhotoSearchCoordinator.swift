@@ -21,25 +21,29 @@ protocol PhotoSearcher {
 /// Searches for photo models by page from a URL
 class PhotoSearchCoordinator<T: PhotoSearchResult>: PhotoSearcher {
     
-    typealias PhotoFetchCallback = (Result<[Photo],Error>)->()
+    typealias PhotoFetchCallback = (Result<[Photo],Error>) -> Void
     
     /// The url used to make retrieve the photo models
     private var urlBuilder: PaginatedURLBuilder
+    private var service: PhotoSearchService<T>
+    
     var totalPhotoCount: Int?
     
-    init(urlBuilder: PaginatedURLBuilder) {
+    init(urlBuilder: PaginatedURLBuilder,
+         service: PhotoSearchService<T> = PhotoSearchService(mapper: JSONMapper<T>())) {
+        
         self.urlBuilder = urlBuilder
+        self.service = service
     }
 
     func fetchPhotos(for page: Int, completion: @escaping PhotoFetchCallback) {
         urlBuilder.page = page
         fetchPhotos(with: completion)
     }
-    
-    //TODO: inject service?
+
     /// Helper method that attempts to retrieve photo models using the urlBuilder property
     private func fetchPhotos(with completion: @escaping PhotoFetchCallback) {
-        PhotoSearchService<T>().fetch(from: urlBuilder.url) { (result) in
+        service.fetch(from: urlBuilder.url) { (result) in
             switch result {
             case .success(let searchResult):
                 if self.totalPhotoCount == nil { self.totalPhotoCount = searchResult.totalCount }
