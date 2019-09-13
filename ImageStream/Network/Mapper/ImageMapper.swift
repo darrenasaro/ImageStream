@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /// A Mapper that maps Data to a UIImage
-class ImageMapper: Mapper {
+struct ImageMapper: Mapper {
     func map(data: Data) throws -> UIImage {
         guard let image = UIImage(data: data) else {
             throw ImageDataError.noImageFromData

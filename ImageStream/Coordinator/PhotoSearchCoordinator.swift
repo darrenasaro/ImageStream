@@ -25,13 +25,14 @@ class PhotoSearchCoordinator<T: PhotoSearchResult>: PhotoSearcher {
     
     /// The url used to make retrieve the photo models
     private var urlBuilder: PaginatedURLBuilder
-    private var service: PhotoSearchService<T>
+    private var service: DefaultDecodableService<T>
     
     var totalPhotoCount: Int?
     
-    init(urlBuilder: PaginatedURLBuilder,
-         service: PhotoSearchService<T> = PhotoSearchService(mapper: JSONMapper<T>())) {
-        
+    init(
+        urlBuilder: PaginatedURLBuilder,
+        service: DefaultDecodableService<T> = DecodableService(mapper: JSONMapper<T>())
+    ) {
         self.urlBuilder = urlBuilder
         self.service = service
     }

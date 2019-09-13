@@ -13,12 +13,11 @@ protocol NetworkService {
     associatedtype U: Mapper
     var mapper: U { get }
     var downloader: NetworkDownloader { get }
-    func fetch(from url: String, completion: @escaping (Result<U.OutputType, Error>)->())
+    func fetch(from url: String, completion: @escaping (Result<U.OutputType, Error>) -> Void)
 }
 
 extension NetworkService {
-
-    func fetch(from url: String, completion: @escaping (Result<U.OutputType, Error>)->()) {
+    func fetch(from url: String, completion: @escaping (Result<U.OutputType, Error>) -> Void) {
         downloader.fetch(from: url) { (result) in
             switch result {
             case .success(let resultData):
@@ -32,20 +31,5 @@ extension NetworkService {
                 completion(.failure(error))
             }
         }
-    }
-}
-
-typealias DecodableService<T: Decodable> = GeneralService<JSONMapper<T>>
-typealias PhotoSearchService<T: PhotoSearchResult> = DecodableService<T>
-typealias ImageService = GeneralService<ImageMapper>
-
-struct GeneralService<T: Mapper>: NetworkService {
-
-    let downloader: NetworkDownloader
-    let mapper: T
-
-    init(downloader: NetworkDownloader = AFDownloader(), mapper: T) {
-        self.downloader = downloader
-        self.mapper = mapper
     }
 }

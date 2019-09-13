@@ -12,9 +12,9 @@ import UIKit
 /// Attempts to retrieve a UIImage from a URL.
 class PhotoDataCoordinator {
     
-    private let service: ImageService
+    private let service: DefaultImageService
     
-    init(service: ImageService = ImageService(mapper: ImageMapper())) {
+    init(service: DefaultImageService = ImageService(mapper: ImageMapper())) {
         self.service = service
     }
     //TODO: cache image data
