@@ -11,14 +11,13 @@ import UIKit
 
 /// Attempts to retrieve a UIImage from a URL.
 class PhotoDataCoordinator {
-    
     private let service: DefaultImageService
     
     init(service: DefaultImageService = ImageService(mapper: ImageMapper())) {
         self.service = service
     }
     //TODO: cache image data
-    func fetchData(from url: String, completion: @escaping (Result<UIImage, Error>)->()) {
+    func fetchData(from url: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
         service.fetch(from: url) { (result) in
             completion(result)
         }
