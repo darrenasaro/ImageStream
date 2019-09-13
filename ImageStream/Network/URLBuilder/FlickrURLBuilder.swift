@@ -15,11 +15,12 @@ class FlickrURLBuilder: APIURLBuiler {
     private var apiKey: String
     private var method: Method
     
-    init(baseURL: String = "https://www.flickr.com/services/rest/",
-         apiKey: String = flickrAPIKey,
-         method: Method,
-         queryArguments: [String: String]) {
-        
+    init(
+        baseURL: String = "https://www.flickr.com/services/rest/",
+        apiKey: String = flickrAPIKey,
+        method: Method,
+        queryArguments: [String: String]
+    ) {
         self.apiKey = apiKey
         self.method = method
         
