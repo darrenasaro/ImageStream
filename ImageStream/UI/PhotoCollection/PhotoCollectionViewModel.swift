@@ -44,7 +44,7 @@ class PhotoCollectionViewModel {
         guard lastPage > lastFetchedPage else { return [] }
         
         var pages = [Int]()
-        for index in lastFetchedPage...lastPage {
+        for index in (lastFetchedPage + 1)...lastPage {
             pages.append(index)
         }
         

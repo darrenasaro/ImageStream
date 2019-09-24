@@ -21,12 +21,7 @@ extension NetworkService {
         downloader.fetch(from: url) { (result) in
             switch result {
             case .success(let resultData):
-                do {
-                    let model: U.OutputType = try self.mapper.map(data: resultData)
-                    completion(.success(model))
-                } catch let error {
-                    completion(.failure(error))
-                }
+                completion(Result(catching: { try self.mapper.map(data: resultData) }))
             case .failure(let error):
                 completion(.failure(error))
             }

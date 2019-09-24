@@ -18,40 +18,41 @@ protocol PhotoSearcher {
     func fetchPhotos(for page: Int, completion: @escaping (Result<[Photo],Error>)->())
 }
 
-/// Searches for photo models by page from a URL
+/// Searches for photo models by page from a URL.
 class PhotoSearchCoordinator<T: PhotoSearchResult>: PhotoSearcher {
     typealias PhotoFetchCallback = (Result<[Photo],Error>) -> Void
-    /// The url used to make retrieve the photo models
-    private var urlBuilder: PaginatedURLBuilder
+    typealias PhotoSearchEndpoint = PaginatedEndpoint
+    /// The url used to make retrieve the photo models.
+    private var endpoint: PhotoSearchEndpoint
     private var service: DefaultDecodableService<T>
     
     var totalPhotoCount: Int?
     
     init(
-        urlBuilder: PaginatedURLBuilder,
+        endpoint: PhotoSearchEndpoint,
         service: DefaultDecodableService<T> = DecodableService(mapper: JSONMapper<T>())
     ) {
-        self.urlBuilder = urlBuilder
+        self.endpoint = endpoint
         self.service = service
     }
 
     // MARK: - API
     
     func fetchPhotos(for page: Int, completion: @escaping PhotoFetchCallback) {
-        urlBuilder.page = page
+        endpoint = endpoint.copy(with: page)
         fetchPhotos(with: completion)
     }
 
     func page(for index: Int) -> Int {
-        return index/urlBuilder.perPage + 1
+        return index/endpoint.perPage + 1
     }
 }
 
 // MARK: - Helper functions
 extension PhotoSearchCoordinator {
-    /// Helper method that attempts to retrieve photo models using the urlBuilder property
+    /// Helper method that attempts to retrieve photo models using the endpoint property
     private func fetchPhotos(with completion: @escaping PhotoFetchCallback) {
-        service.fetch(from: urlBuilder.url) { (result) in
+        service.fetch(from: endpoint.url) { (result) in
             switch result {
             case .success(let searchResult):
                 if self.totalPhotoCount == nil { self.totalPhotoCount = searchResult.totalCount }

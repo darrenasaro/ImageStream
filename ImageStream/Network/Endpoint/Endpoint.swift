@@ -9,16 +9,19 @@
 import Foundation
 
 /// Abstraction for a type that produces a URL.
-protocol URLBuilder {
+protocol Endpoint {
     var url: String { get }
 }
 
 /// Abstraction for a type that produces a URL which is dependent upon page arguments.
-protocol PaginatedURLBuilder: URLBuilder {
+protocol PaginatedEndpoint: Endpoint {
     /// The page being requested.
-    var page: Int { get set }
+    var page: Int { get }
     /// The amount of items per page requested.
-    var perPage: Int { get set }
+    var perPage: Int { get }
+    /// Copy self while only modifying the page.
+    func copy(with newPage: Int) -> PaginatedEndpoint
 }
+
 
 

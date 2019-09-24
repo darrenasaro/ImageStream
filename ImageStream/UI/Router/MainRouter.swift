@@ -13,8 +13,8 @@ class MainRouter: Router {
     private var photoCollectionViewController: PhotoCollectionViewController?
     
     func start() -> UIViewController {
-        let urlBuilder = FlickrPhotoSearchURLBuilder(searchString: "minimal")
-        let photoSearcher = PhotoSearchCoordinator<FlickrPhotoSearchResult>(urlBuilder: urlBuilder)
+        let endpoint = FlickrPhotoSearchEndpoint(searchInput: "minimal")
+        let photoSearcher = PhotoSearchCoordinator<FlickrPhotoSearchResult>(endpoint: endpoint)
         let viewModel = PhotoCollectionViewModel(searcher: photoSearcher)
         photoCollectionViewController = PhotoCollectionViewController(viewModel: viewModel)
         photoCollectionViewController!.selectionCallback = { [weak self] photo in self?.route(to: photo) }

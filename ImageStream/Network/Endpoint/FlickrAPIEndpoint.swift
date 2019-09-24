@@ -11,28 +11,23 @@ import Foundation
 fileprivate let flickrAPIKey = "8fc4e611f9c6ebc9d1f8c48ff92ece14"
 
 /// Creates a URL specific to the Flickr API.
-class FlickrURLBuilder: APIURLBuiler {
-    private var apiKey: String
-    private var method: Method
-    
+class FlickrAPIEndpoint: APIEndpoint {
     init(
-        baseURL: String = "https://www.flickr.com/services/rest/",
         apiKey: String = flickrAPIKey,
         method: Method,
-        queryArguments: [String: String]
+        queryItems: [String: String]
     ) {
-        self.apiKey = apiKey
-        self.method = method
-        
-        super.init(baseURL: baseURL, queryArguments: queryArguments)
-        
-        self.queryArguments["api_key"] = apiKey
-        self.queryArguments["method"] = method.rawValue
+        var inputQueryItems = queryItems
+        inputQueryItems["api_key"] = apiKey
+        inputQueryItems["method"] = method.rawValue
+        super.init(
+            path: "https://www.flickr.com/services/rest/",
+            queryItems: inputQueryItems
+        )
     }
 }
 
-extension FlickrURLBuilder {
-    //TODO: Add more methods
+extension FlickrAPIEndpoint {
     /// Method names for Flickr API Requests.
     enum Method: String {
         case photosSearch = "flickr.photos.search"
