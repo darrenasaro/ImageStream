@@ -95,7 +95,10 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
     }
     /// Request more photos from viewModel for the upcoming indices.
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        viewModel.fetchPhotos(for: indexPaths.map { $0.row })
+        guard indexPaths.count > 0 else { return }
+        let minIndex = indexPaths.min { $0.row < $1.row }!.row
+        let maxIndex = indexPaths.max { $0.row < $1.row }!.row
+        viewModel.fetchPhotos(in: minIndex...maxIndex)
     }
 }
 

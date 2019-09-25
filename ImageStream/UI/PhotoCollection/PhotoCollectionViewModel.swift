@@ -14,7 +14,6 @@ import Foundation
 
 /// Stores all the Photo models and gets more as needed.
 class PhotoCollectionViewModel {
-    
     weak var delegate: PhotoCollectionViewModelDelegate?
     private var searcher: PhotoSearcher
     
@@ -29,26 +28,24 @@ class PhotoCollectionViewModel {
         self.searcher = searcher
     }
     
-    //TODO: requests on a serial queue
+    // MARK: - API
+    
+    // TODO: requests on a serial queue
     /// Gets the page of photos for the index if it hasn't already been retrieved
-    func fetchPhotos(for indices: [Int]) {
-        for page in pagesToFetchFrom(indices) {
+    func fetchPhotos(in range: ClosedRange<Int>) {
+        for page in pagesToFetchFrom(range) {
             searchForPhotos(on: page)
             lastFetchedPage = page
         }
     }
-    
-    private func pagesToFetchFrom(_ indices: [Int]) -> [Int] {
-        guard indices.count > 0 else { return [] }
-        let lastPage = searcher.page(for: indices.last!)
-        guard lastPage > lastFetchedPage else { return [] }
-        
-        var pages = [Int]()
-        for index in (lastFetchedPage + 1)...lastPage {
-            pages.append(index)
-        }
-        
-        return pages
+}
+
+// MARK: - Helper functions
+extension PhotoCollectionViewModel {
+    private func pagesToFetchFrom(_ range: ClosedRange<Int>) -> Range<Int> {
+        let firstPageToFetch = max(lastFetchedPage + 1, range.lowerBound)
+        let lastPageToFetch = max(firstPageToFetch, range.upperBound + 1)
+        return firstPageToFetch..<lastPageToFetch
     }
     
     private func searchForPhotos(on page: Int) {
@@ -65,3 +62,5 @@ class PhotoCollectionViewModel {
         }
     }
 }
+
+
