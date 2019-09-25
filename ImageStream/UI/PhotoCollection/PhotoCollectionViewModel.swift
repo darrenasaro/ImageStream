@@ -43,8 +43,8 @@ class PhotoCollectionViewModel {
 // MARK: - Helper functions
 extension PhotoCollectionViewModel {
     private func pagesToFetchFrom(_ range: ClosedRange<Int>) -> Range<Int> {
-        let firstPageToFetch = max(lastFetchedPage + 1, range.lowerBound)
-        let lastPageToFetch = max(firstPageToFetch, range.upperBound + 1)
+        let firstPageToFetch = max(lastFetchedPage + 1, searcher.page(for: range.lowerBound))
+        let lastPageToFetch = max(firstPageToFetch, searcher.page(for: range.upperBound) + 1)
         return firstPageToFetch..<lastPageToFetch
     }
     

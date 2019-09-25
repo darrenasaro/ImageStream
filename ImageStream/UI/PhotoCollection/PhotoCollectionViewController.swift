@@ -46,7 +46,7 @@ class PhotoCollectionViewController: UIViewController {
     
     private func setupViewModel() {
         viewModel.delegate = self
-        viewModel.fetchPhotos(for: [0])
+        viewModel.fetchPhotos(in: 0...0)
     }
     
     private func setupCollectionView() {
