@@ -26,7 +26,7 @@
 		1F38300A230DCEB600669A58 /* FlickrPhotoSearchEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F383009230DCEB600669A58 /* FlickrPhotoSearchEndpoint.swift */; };
 		1F38300C230DCFE300669A58 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F38300B230DCFE300669A58 /* APIEndpoint.swift */; };
 		1F38300E230E021700669A58 /* SquareCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F38300D230E021700669A58 /* SquareCollectionViewLayout.swift */; };
-		1F383013230F1D9900669A58 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F383012230F1D9900669A58 /* NetworkServiceTests.swift */; };
+		1F383013230F1D9900669A58 /* DecodableServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F383012230F1D9900669A58 /* DecodableServiceTests.swift */; };
 		1F383015230F290500669A58 /* MapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F383014230F290500669A58 /* MapperTests.swift */; };
 		1F5C5330232C14140000BFA4 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C532F232C14140000BFA4 /* ImageService.swift */; };
 		1F5C5332232C14640000BFA4 /* DecodableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C5331232C14640000BFA4 /* DecodableService.swift */; };
@@ -91,7 +91,7 @@
 		1F383009230DCEB600669A58 /* FlickrPhotoSearchEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPhotoSearchEndpoint.swift; sourceTree = "<group>"; };
 		1F38300B230DCFE300669A58 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		1F38300D230E021700669A58 /* SquareCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCollectionViewLayout.swift; sourceTree = "<group>"; };
-		1F383012230F1D9900669A58 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
+		1F383012230F1D9900669A58 /* DecodableServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableServiceTests.swift; sourceTree = "<group>"; };
 		1F383014230F290500669A58 /* MapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapperTests.swift; sourceTree = "<group>"; };
 		1F5C532F232C14140000BFA4 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		1F5C5331232C14640000BFA4 /* DecodableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableService.swift; sourceTree = "<group>"; };
@@ -249,7 +249,7 @@
 		1F383016230F2E6500669A58 /* Network Tests */ = {
 			isa = PBXGroup;
 			children = (
-				1F383012230F1D9900669A58 /* NetworkServiceTests.swift */,
+				1F383012230F1D9900669A58 /* DecodableServiceTests.swift */,
 				1F383014230F290500669A58 /* MapperTests.swift */,
 			);
 			path = "Network Tests";
@@ -647,7 +647,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F78EE472305E29600E40861 /* ModelTests.swift in Sources */,
-				1F383013230F1D9900669A58 /* NetworkServiceTests.swift in Sources */,
+				1F383013230F1D9900669A58 /* DecodableServiceTests.swift in Sources */,
 				1F383015230F290500669A58 /* MapperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

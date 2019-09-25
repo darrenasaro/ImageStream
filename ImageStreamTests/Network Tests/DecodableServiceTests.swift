@@ -9,13 +9,13 @@
 import XCTest
 @testable import ImageStream
 
-class GeneralServiceTests: XCTestCase {
+class DecodableServiceTests: XCTestCase {
 
     func test_fetch_whenDownloaderFails_succeeds() {
         let dummy = MappedDummy()
         let downloader = NetworkDownloaderStub(error: ErrorFake.failure)
         let mapper = MapperStub(object: dummy)
-        let sut = GeneralService<MapperStub>(downloader: downloader, mapper: mapper)
+        let sut = DecodableService<MapperStub>(downloader: downloader, mapper: mapper)
         
         let promise = expectation(description: "Data matches")
         sut.fetch(from: "") { result in
@@ -35,7 +35,7 @@ class GeneralServiceTests: XCTestCase {
         let dummy = MappedDummy()
         let downloader = NetworkDownloaderStub(data: data)
         let mapper = MapperStub(object: dummy)
-        let sut = GeneralService<MapperStub>(downloader: downloader, mapper: mapper)
+        let sut = DecodableService<MapperStub>(downloader: downloader, mapper: mapper)
         
         let promise = expectation(description: "Data matches")
         sut.fetch(from: "") { result in
@@ -54,7 +54,7 @@ class GeneralServiceTests: XCTestCase {
         let data = Data()
         let downloader = NetworkDownloaderStub(data: data)
         let mapper = MapperStub(error: ErrorFake.failure)
-        let sut = GeneralService<MapperStub>(downloader: downloader, mapper: mapper)
+        let sut = DecodableService<MapperStub>(downloader: downloader, mapper: mapper)
         
         let promise = expectation(description: "Data matches")
         sut.fetch(from: "") { result in
@@ -70,7 +70,7 @@ class GeneralServiceTests: XCTestCase {
     }
 }
 
-extension GeneralServiceTests {
+extension DecodableServiceTests {
     enum ErrorFake: Error {
         case failure
     }
@@ -91,7 +91,7 @@ extension GeneralServiceTests {
         }
     }
     
-    class MappedDummy { }
+    class MappedDummy: Decodable { }
     
     class MapperStub: Mapper {
         var error: Error?
